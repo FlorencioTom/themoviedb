@@ -1,0 +1,35 @@
+.container-cards{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+}
+.card{
+    width:20%;
+    max-height: 500px;
+}
+.card-img{
+    width:100%;
+    height: 100%;
+    object-fit: cover;
+}
+.subir{
+    background-color: red;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+html{
+    overflow-y: hidden;
+}
+.container-login{
+    position: absolute; /* Establece el posicionamiento absoluto */
+    top: 30%; /* Ubica el borde superior del div en el 50% del contenedor */
+    left: 50%; /* Ubica el borde izquierdo del div en el 50% del contenedor */
+    transform: translate(-50%, -50%); /* Mueve el div hacia el centro del contenedor */
+    background-color: #333; /* Color de fondo del div centrado */
+    color: #fff; /* Color del texto */
+    padding: 20px; /* Espaciado interno del div */
+    border-radius: 5px; /* Radio de borde del div */
+    width:50%;
+}

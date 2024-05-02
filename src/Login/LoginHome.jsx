@@ -2,12 +2,14 @@ import React,{ useState, useEffect} from 'react';
 import ScrollUpButton from "react-scroll-up"; 
 import {Button} from 'primereact/button';
 import axios from 'axios';
+import SimpleBar from 'simplebar-react';
+import 'simplebar-react/dist/simplebar.min.css';
 import 'primereact/resources/themes/saga-blue/theme.css'; // Importa el tema de PrimeReact
 import 'primereact/resources/primereact.min.css'; // Importa los estilos base de PrimeReact
 import 'primeicons/primeicons.css'; // Importa los iconos de PrimeIcons
-import './Login.css';
+import './LoginHome.css';
 
-const Login = () => {
+const LoginHome = () => {
   const token = import.meta.env.VITE_TOKEN_THEMOVIEDB_API;
   const [data, setData] = useState(null);
 
@@ -38,6 +40,7 @@ const Login = () => {
   }
   return (
     <>
+      <SimpleBar forceVisible="y" autoHide={false} style={{ maxHeight: '100vh' }}>
         <div className='container-cards'>
             {data && data.results.map((movie, i) => (
                 <div key={i} className="card">
@@ -45,12 +48,15 @@ const Login = () => {
                 </div>
             ))}
         </div>
+      </SimpleBar>
+      <ScrollUpButton showUnder={100} >
+        <Button icon="pi pi-arrow-up" rounded aria-label="Filter" />
+      </ScrollUpButton>
+      <div className="container-login">
 
-        <ScrollUpButton showUnder={100} >
-            <Button icon="pi pi-arrow-up" rounded aria-label="Filter" />
-        </ScrollUpButton>
+      </div>
     </>
   )
 }
 
-export default Login;
+export default LoginHome;
