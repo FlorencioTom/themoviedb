@@ -8,11 +8,14 @@ import 'primeicons/primeicons.css'; // Importa los iconos de PrimeIcons
 import './App.css';
 
 const App = () => {
+  //dotenv.config();
+  const token = import.meta.env.VITE_TOKEN_THEMOVIEDB_API;
   const [data, setData] = useState(null);
   const [imagenes, setImagenes] = useState(null);
 
   useEffect(() => {
     fetchData();
+    console.log(token);
     //images();
   }, []); // El segundo argumento del useEffect es un array vacío para que se ejecute solo una vez al montar el componente
 
@@ -28,7 +31,7 @@ const App = () => {
         },
         headers: {
           accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ODdmMWI1NzU2YjI2NWJlYjQ5OGRmNmE4NGE1ZTAwNCIsInN1YiI6IjY2MWNmYzdlOTMxZWExMDE4NjY1OGQ4NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.3XjXl-eRtZISl0qCp9c5R2mbH_jGfcMuhIEtxwfAlVk' // Reemplaza 'tu_token_de_autenticacion' con tu token real
+          Authorization: `Bearer ${token}` // Reemplaza 'tu_token_de_autenticacion' con tu token real
         }
       });
       setData(response.data);
@@ -36,44 +39,19 @@ const App = () => {
     } catch (error) {
       console.error('Error al obtener datos:', error);
     }
-  };
-
-  /*const images = async () => {
-    try {
-      const response = await axios.get('https://api.themoviedb.org/3/movie/693134/images', {
-        headers: {
-          accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ODdmMWI1NzU2YjI2NWJlYjQ5OGRmNmE4NGE1ZTAwNCIsInN1YiI6IjY2MWNmYzdlOTMxZWExMDE4NjY1OGQ4NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.3XjXl-eRtZISl0qCp9c5R2mbH_jGfcMuhIEtxwfAlVk' // Reemplaza 'tu_token_de_autenticacion' con tu token real
-        }
-      });
-      setImagenes(response.data.logos);
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error al obtener datos:', error);
-    }
-  };*/
+  }
   return (
     <>
-    <div className='container-cards'>
-      {/* Aquí puedes renderizar los datos obtenidos */}
-      {data && data.results.map((movie, i) => (
-          <div key={i} className="card">
-            <img className='card-img' src={'https://image.tmdb.org/t/p/w500'+movie.poster_path} alt={movie.title}/>
-          </div>
-       ))}
-      
-      {/*imagenes && (
-        <ul>
-          {imagenes.map((movie, i) => (
-            <img key={i} src={'https://image.tmdb.org/t/p/w500'+movie.file_path}/>
-          ))}
-        </ul>
-      )*/}
-    </div>
-    <ScrollUpButton showUnder={100} >
-    <Button icon="pi pi-arrow-up
-" rounded aria-label="Filter" />
-    </ScrollUpButton>
+      <div className='container-cards'>
+        {data && data.results.map((movie, i) => (
+            <div key={i} className="card">
+              <img className='card-img' src={'https://image.tmdb.org/t/p/w500'+movie.poster_path} alt={movie.title}/>
+            </div>
+        ))}
+      </div>
+      <ScrollUpButton showUnder={100} >
+        <Button icon="pi pi-arrow-up" rounded aria-label="Filter" />
+      </ScrollUpButton>
     </>
   );
 };
