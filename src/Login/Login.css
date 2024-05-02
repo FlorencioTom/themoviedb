@@ -1,0 +1,92 @@
+.container-cards{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    background-color: black;
+}
+.card{
+    width:20%;
+    max-height: 500px;
+    overflow: hidden; 
+}
+.card-img{
+    width:100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+.subir{
+    background-color: red;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+html{
+    overflow-y: hidden;
+}
+.container-login{
+    position: absolute; /* Establece el posicionamiento absoluto */
+    top: 30%; /* Ubica el borde superior del div en el 50% del contenedor */
+    left: 50%; /* Ubica el borde izquierdo del div en el 50% del contenedor */
+    transform: translate(-50%, -50%); /* Mueve el div hacia el centro del contenedor */
+    color: #fff; /* Color del texto */
+    padding: 20px; /* Espaciado interno del div */
+    border-radius: 5px; /* Radio de borde del div */
+    display: flex;
+    justify-content: center;
+}
+
+
+.flip-card{
+    width: 300px;
+    height:400px;
+    perspective: 1000px;
+    border-radius: 10px;
+    
+}
+.flip-card-inner{
+    width:100%;
+    height:100%;
+    transition:transform 0.3s;
+    transform-style: preserve-3d;
+}
+.flip-card-front,
+.flip-card-back{
+    position:absolute;
+    backface-visibility: hidden;
+    border-radius: 10px;
+}
+.flip-card-back{
+    width:100%;
+    height:100%;
+    background-color:  rgba(51, 51, 51, 0.5);
+    transform: rotateY(-180deg);
+    backdrop-filter: blur(10px);
+}
+.flip-card-front{
+    width:300px;
+    height:300px;
+    background-color:  rgba(51, 51, 51, 0.5);
+    backdrop-filter: blur(10px);
+
+}
+.login-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    gap:20px;
+}
+.card-img:hover{
+    transform: scale(1.1);
+    filter: saturate(150%);
+}
+@media screen and (max-width: 819px) {
+    .card{
+        width:25%;
+    }
+  }
+
+
