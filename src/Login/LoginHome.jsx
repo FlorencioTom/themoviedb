@@ -1,4 +1,4 @@
-import React,{ useState, useEffect} from 'react';
+import React,{ useState, useEffect,useRef} from 'react';
 import ScrollUpButton from "react-scroll-up"; 
 import {Button} from 'primereact/button';
 import axios from 'axios';
@@ -7,18 +7,23 @@ import 'simplebar-react/dist/simplebar.min.css';
 import 'primereact/resources/themes/saga-blue/theme.css'; // Importa el tema de PrimeReact
 import 'primereact/resources/primereact.min.css'; // Importa los estilos base de PrimeReact
 import 'primeicons/primeicons.css'; // Importa los iconos de PrimeIcons
+import Nav from '../Nav/Nav';
 import LoginCard from './LoginCard';
 import RegisterCard from './RegisterCard';
 import {animate, motion} from 'framer-motion';
 import 'animate.css';
 import './Login.css';
 import Buttonn from '@mui/material/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faX } from '@fortawesome/free-solid-svg-icons';
 
 const LoginHome = () => {
   const token = import.meta.env.VITE_TOKEN_THEMOVIEDB_API;
+  const [loginVisible, setLoginVisible] = useState(false);
   const [data, setData] = useState(null);
   const [flip, setFlip] = useState(false);
   const [animatee, setAnimate] = useState(false);
+  const containerLogin = useRef(null);
 
   useEffect(() => {
     fetchData();
@@ -51,8 +56,22 @@ const LoginHome = () => {
     setFlip(!flip);
   }
 
+  const handleProfile = (data) => {
+    setLoginVisible(data);
+  }
+
+  const handleTransitionEnd = () => {
+    /*if (!loginVisible) {
+      setTimeout(() => {
+        setFadeOutCompleted(true);
+      }, 300);
+    }*/
+    alert('.');
+  }
+
   return (
     <>
+      <Nav info={handleProfile} estado={!loginVisible}/>
       <SimpleBar forceVisible="y" autoHide={false} style={{ maxHeight: '100vh' }}>
         <div className='container-cards'>
             {data && data.results.map((movie, i) => (
@@ -64,8 +83,12 @@ const LoginHome = () => {
       </SimpleBar>
       <ScrollUpButton showUnder={100} >
         <Button icon="pi pi-arrow-up" rounded aria-label="Filter" />
-      </ScrollUpButton>
-      <div className="container-login">
+      </ScrollUpButton> 
+      <div ref={containerLogin} className={`container-login animate__animated animate__faster ${loginVisible ? 'animate__fadeIn' : 'invisible'}`}>
+        <div className='cerrar' onClick={() => setLoginVisible(!loginVisible)}>
+          <FontAwesomeIcon className='cerrar-icono' icon={faX} />
+        </div>
+        
         <div className="flip-card">
           <motion.div 
             className='flip-card-inner'
@@ -74,14 +97,14 @@ const LoginHome = () => {
             transition={{duration:0.3, animationDirection:'normal'}}
             onAnimationComplete={() => {setAnimate(false)}}>
               <div className="flip-card-front">
-                <LoginCard />
+                <LoginCard/>
                 <div style={{width:'100%', display:'flex', justifyContent:'center', marginTop:'30px'}}>
                   <Buttonn variant="contained" color="secondary" onClick={() => {handleFlip()}}>¿Aun no tienes cuenta?</Buttonn>
                 </div>
               </div>
 
               <div className="flip-card-back">
-                <RegisterCard /> 
+                <RegisterCard/> 
                 <div style={{width:'100%', display:'flex', justifyContent:'center', marginTop:'30px'}}>
                   <Buttonn variant="contained" color="secondary" onClick={() => {handleFlip()}}>Volver al Login</Buttonn>
                 </div> 

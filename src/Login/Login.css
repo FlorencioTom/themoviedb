@@ -25,15 +25,41 @@
 html{
     overflow-y: hidden;
 }
+.cerrar{
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    margin-bottom: 10px;
+}
+
+.cerrar-icono{
+    padding: 10px;
+    width: 20px;
+    height: 20px;
+    background-color:  rgba(51, 51, 51, 0.5);
+    backdrop-filter: blur(30px);
+    border-radius: 50%;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+    color: white;
+}
+
+.cerrar-icono:hover{
+    background-color:rgba(255, 0, 0, 0.184);
+    color: white;
+    transform: scale(1.3);
+}
+
 .container-login{
     position: absolute; /* Establece el posicionamiento absoluto */
-    top: 30%; /* Ubica el borde superior del div en el 50% del contenedor */
+    top: 50%; /* Ubica el borde superior del div en el 50% del contenedor */
     left: 50%; /* Ubica el borde izquierdo del div en el 50% del contenedor */
     transform: translate(-50%, -50%); /* Mueve el div hacia el centro del contenedor */
     color: #fff; /* Color del texto */
     padding: 20px; /* Espaciado interno del div */
     border-radius: 5px; /* Radio de borde del div */
     display: flex;
+    flex-direction: column;
     justify-content: center;
 }
 
