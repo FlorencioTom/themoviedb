@@ -37,11 +37,16 @@
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
-    &:hover{
+    &:not(.favorito):hover{
         background-color: #1565c0;  
         color:white;
         transform: scale(1.1);
     }
+}
+
+.favorito:hover{
+    background-color: #afc015; 
+    transform: scale(1.1);   
 }
 
 .profileAccess{
@@ -58,7 +63,34 @@
     visibility: hidden;
 }
 
-@media (max-width: 780px) {
+.menu-sidebar{
+    margin-top: 0px;
+    padding:0px;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+}
+.menu-sidebar-item{
+    padding: 20px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: transform 0.3s, color 0.3s;
+}
+.menu-sidebar-item:not(.fav):hover {
+    transform: scale(1.1);
+    color: #1565c0;
+}
+.fav:hover {
+    transform: scale(1.1);
+    color: #849500;
+}
+.menu-sidebar-item-text{
+    margin-left: 20px;
+    transition: transform 0.3s;
+}
+
+
+@media (max-width: 900px) {
     .header-desktop{
         display:none;
     }
@@ -67,11 +99,13 @@
         position: absolute;
         z-index: 99;
         display: flex;
-        justify-content: end;
+        justify-content: space-between;
         margin-top: 30px;
+        padding-right: 50px;
+        padding-left: 50px;
     }
     .profileAccess{
-        margin-right: 50px;
+        margin-right: 0px;
         width: 50px;
         height: 50px;
         padding: 0px;
@@ -80,7 +114,7 @@
         justify-content: center;
     }
 }
-@media (min-width: 780px) {
+@media (min-width: 900px) {
     .header-mobile{
         display:none;
     }

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef}  from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faClapperboard, faBars,faMasksTheater, faFile, faTv, faHeart} from '@fortawesome/free-solid-svg-icons';
 import { Sidebar } from 'primereact/sidebar';
-import { Button } from 'primereact/button';
+import { Divider } from 'primereact/divider';
+
 
 import './Nav.css';
 const Nav = ({info, estado}) => {
@@ -64,8 +64,12 @@ const Nav = ({info, estado}) => {
                 Programas
               </li>
 
-              <li className='menu-list-item' onMouseEnter={(e) => hover(e.currentTarget)} onMouseLeave={(e) => notHover(e.currentTarget)}>
+              <li className='menu-list-item ' onMouseEnter={(e) => hover(e.currentTarget)} onMouseLeave={(e) => notHover(e.currentTarget)}>
                 Documentales
+              </li>
+
+              <li className='menu-list-item favorito' onMouseEnter={(e) => hover(e.currentTarget)} onMouseLeave={(e) => notHover(e.currentTarget)}>
+                Favoritos
               </li>
 
             </ul>
@@ -75,14 +79,32 @@ const Nav = ({info, estado}) => {
         </nav>
     </header>
     <header className='header-mobile'>
-    <div className="">
-            <Sidebar visible={visible} onHide={() => setVisible(false)}>
-                
-            </Sidebar>
-            <span className='profileAccess' onClick={() => setVisible(true)}> 
-              <FontAwesomeIcon icon={faBars} />
-            </span>
-        </div>
+      <div>
+        <span className='profileAccess' onClick={() => setVisible(true)}> 
+          <FontAwesomeIcon icon={faBars} />
+        </span>      
+      </div>
+      <div className="">
+        <Sidebar visible={visible} onHide={() => setVisible(false)}>
+          <ul className='menu-sidebar'>
+            <Divider type="dashed"/>
+            <li className='menu-sidebar-item'><FontAwesomeIcon icon={faClapperboard} /><span className='menu-sidebar-item-text'>Peliculas</span></li>
+            <Divider type="dashed"/>
+            <li className='menu-sidebar-item'><FontAwesomeIcon icon={faMasksTheater} /><span className='menu-sidebar-item-text'>Series</span></li>
+            <Divider type="dashed"/>
+            <li className='menu-sidebar-item'><FontAwesomeIcon icon={faTv} /><span className='menu-sidebar-item-text'>Programas</span></li>
+            <Divider type="dashed"/>
+            <li className='menu-sidebar-item'><FontAwesomeIcon icon={faFile} /><span className='menu-sidebar-item-text'>Documentales</span></li>
+            <Divider type="dashed"/>
+            <li className='menu-sidebar-item fav'><FontAwesomeIcon icon={faHeart} /><span className='menu-sidebar-item-text'>Favoritos</span></li>
+            <Divider type="dashed"/>
+          </ul>
+        </Sidebar>
+        <span className='profileAccess' onClick={() => {toggleLogin()}}> 
+          <FontAwesomeIcon icon={faUser} />
+        </span>
+    </div>
+
     </header>
     </>
   )
