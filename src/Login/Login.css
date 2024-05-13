@@ -117,11 +117,7 @@ html{
     box-shadow: 0 0 0 0.2rem #0f9100c4;
     border-color: #13f003;
 }
-.p-inputtext:enabled:focus {
 
-    /*box-shadow: 0 0 0 0.2rem #910000c4;
-    border-color: #f00303; */
-}
 @media screen and (max-width: 819px) {
     .card{
         width:25%;
