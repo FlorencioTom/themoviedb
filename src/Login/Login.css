@@ -52,7 +52,7 @@ html{
 
 .container-login{
     position: absolute; /* Establece el posicionamiento absoluto */
-    top: 50%; /* Ubica el borde superior del div en el 50% del contenedor */
+    top: 40%; /* Ubica el borde superior del div en el 50% del contenedor */
     left: 50%; /* Ubica el borde izquierdo del div en el 50% del contenedor */
     transform: translate(-50%, -50%); /* Mueve el div hacia el centro del contenedor */
     color: #fff; /* Color del texto */
@@ -108,6 +108,19 @@ html{
 .card-img:hover{
     transform: scale(1.1);
     filter: saturate(150%);
+}
+.invalid{
+    box-shadow: 0 0 0 0.2rem #910000c4;
+    border-color: #f00303;
+}
+.valid{
+    box-shadow: 0 0 0 0.2rem #0f9100c4;
+    border-color: #13f003;
+}
+.p-inputtext:enabled:focus {
+
+    /*box-shadow: 0 0 0 0.2rem #910000c4;
+    border-color: #f00303; */
 }
 @media screen and (max-width: 819px) {
     .card{
