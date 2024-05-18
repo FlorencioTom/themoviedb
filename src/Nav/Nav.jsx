@@ -1,16 +1,40 @@
-import React, { useState, useEffect, useRef}  from 'react';
+import React, { useState, useEffect, useRef, useContext}  from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faClapperboard, faBars,faMasksTheater, faFile, faTv, faHeart} from '@fortawesome/free-solid-svg-icons';
+import { faUser, faClapperboard, faBars,faMasksTheater, faFile, faTv, faHeart, faPowerOff} from '@fortawesome/free-solid-svg-icons';
 import { Sidebar } from 'primereact/sidebar';
 import { Divider } from 'primereact/divider';
-
+import { loginContext } from '../Login/loginContext';
+import axios from 'axios';
 
 import './Nav.css';
 const Nav = ({info, estado}) => {
   const [visible, setVisible] = useState(false);
+  const {user, setUser, setToken, token} = useContext(loginContext);
+
+  useEffect(() => {
+
+  },[user, token]);
 
   const toggleLogin = () => {
     info(estado);
+  }
+
+  const logout = async() => {
+    console.log('sesion cerrada');
+    try {
+      const response = await axios.post('http://localhost:3002/usuarios/logout',{
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }       
+      });
+      //console.log(response); // Maneja la respuesta según sea necesario
+      setUser(null);
+      setToken(null);
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error en el logout:', error);
+    }
   }
 
   const hover = (elemento) => {
@@ -73,9 +97,26 @@ const Nav = ({info, estado}) => {
               </li>
 
             </ul>
-            <span className='profileAccess' onClick={() => {toggleLogin()}}> 
-              <FontAwesomeIcon icon={faUser} />
-            </span>
+            {!user && ( 
+              <span className='profileAccess no' onClick={() => {toggleLogin()}}> 
+                {!user && (
+                  <FontAwesomeIcon icon={faUser} />
+                )}
+                {user && (
+                  <FontAwesomeIcon icon={faPowerOff}/>
+                )}
+              </span>
+            )}
+            {user && ( 
+              <span className='profileAccess si' onClick={() => {logout()}}> 
+                {!user && (
+                  <FontAwesomeIcon icon={faUser} />
+                )}
+                {user && (
+                  <FontAwesomeIcon icon={faPowerOff}/>
+                )}
+              </span>
+            )}
         </nav>
     </header>
     <header className='header-mobile'>
@@ -100,9 +141,26 @@ const Nav = ({info, estado}) => {
             <Divider type="dashed"/>
           </ul>
         </Sidebar>
-        <span className='profileAccess' onClick={() => {toggleLogin()}}> 
-          <FontAwesomeIcon icon={faUser} />
-        </span>
+        {!user && ( 
+              <span className='profileAccess no' onClick={() => {toggleLogin()}}> 
+                {!user && (
+                  <FontAwesomeIcon icon={faUser} />
+                )}
+                {user && (
+                  <FontAwesomeIcon icon={faPowerOff}/>
+                )}
+              </span>
+            )}
+            {user && ( 
+              <span className='profileAccess si' onClick={() => {logout()}}> 
+                {!user && (
+                  <FontAwesomeIcon icon={faUser} />
+                )}
+                {user && (
+                  <FontAwesomeIcon icon={faPowerOff}/>
+                )}
+              </span>
+            )}
     </div>
 
     </header>

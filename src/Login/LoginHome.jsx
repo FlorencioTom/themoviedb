@@ -1,4 +1,4 @@
-import React,{ useState, useEffect,useRef} from 'react';
+import React,{ useState, useEffect, useRef, useContext} from 'react';
 import ScrollUpButton from "react-scroll-up"; 
 import {Button} from 'primereact/button';
 import axios from 'axios';
@@ -16,6 +16,7 @@ import './Login.css';
 import Buttonn from '@mui/material/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
+import { loginContext } from './loginContext';
 
 const LoginHome = () => {
   const token = import.meta.env.VITE_TOKEN_THEMOVIEDB_API;
@@ -24,10 +25,11 @@ const LoginHome = () => {
   const [flip, setFlip] = useState(false);
   const [animatee, setAnimate] = useState(false);
   const containerLogin = useRef(null);
+  const {user, tokenjwt} = useContext(loginContext);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [tokenjwt, user]);
 
   const fetchData = async () => {
     try {
@@ -60,22 +62,13 @@ const LoginHome = () => {
     setLoginVisible(data);
   }
 
-  const handleTransitionEnd = () => {
-    /*if (!loginVisible) {
-      setTimeout(() => {
-        setFadeOutCompleted(true);
-      }, 300);
-    }*/
-    alert('.');
-  }
-
   return (
     <>
       <Nav info={handleProfile} estado={!loginVisible}/>
       <SimpleBar forceVisible="y" autoHide={false} style={{ maxHeight: '100vh' }}>
         <div className='container-cards'>
             {data && data.results.map((movie, i) => (
-                <div key={i} className="card animate__animated animate__zoomIn">
+                <div key={i} className="card animate__animated">
                     <img className='card-img' src={'https://image.tmdb.org/t/p/w500'+movie.poster_path} alt={movie.title}/>
                 </div>
             ))}
@@ -83,35 +76,42 @@ const LoginHome = () => {
       </SimpleBar>
       <ScrollUpButton showUnder={100} >
         <Button icon="pi pi-arrow-up" rounded aria-label="Filter" />
-      </ScrollUpButton> 
-      <div ref={containerLogin} className={`container-login animate__animated animate__faster ${loginVisible ? 'animate__fadeIn' : 'invisible'}`}>
-        <div className='cerrar' onClick={() => setLoginVisible(!loginVisible)}>
-          <FontAwesomeIcon className='cerrar-icono' icon={faX} />
-        </div>
-        
-        <div className="flip-card">
-          <motion.div 
-            className='flip-card-inner'
-            initial={false}
-            animate={{rotateY: flip?180:360}}
-            transition={{duration:0.3, animationDirection:'normal'}}
-            onAnimationComplete={() => {setAnimate(false)}}>
-              <div className="flip-card-front">
-                <LoginCard/>
-                <div style={{width:'100%', display:'flex', justifyContent:'center', marginTop:'30px'}}>
-                  <Buttonn variant="contained" color="secondary" onClick={() => {handleFlip()}}>¿Aun no tienes cuenta?</Buttonn>
+      </ScrollUpButton>
+      {!user && (
+        <div ref={containerLogin} className={`container-login animate__animated animate__faster ${loginVisible ? 'animate__fadeIn' : 'invisible'}`}>
+          <div className='cerrar' onClick={() => setLoginVisible(!loginVisible)}>
+            <FontAwesomeIcon className='cerrar-icono' icon={faX} />
+          </div>
+          
+          <div className="flip-card">
+            <motion.div 
+              className='flip-card-inner'
+              initial={false}
+              animate={{rotateY: flip?180:360}}
+              transition={{duration:0.3, animationDirection:'normal'}}
+              onAnimationComplete={() => {setAnimate(false)}}>
+                <div className="flip-card-front">
+                  <LoginCard/>
+                  <div style={{width:'100%', display:'flex', justifyContent:'center', marginTop:'30px'}}>
+                    <Buttonn variant="contained" color="secondary" onClick={() => {handleFlip()}}>¿Aun no tienes cuenta?</Buttonn>
+                  </div>
+                  {user && (
+                    <div className='user-info'>
+                      <p>Bienvenido, {user.user}</p>
+                    </div>
+                  )}
                 </div>
-              </div>
 
-              <div className="flip-card-back">
-                <RegisterCard/> 
-                <div style={{width:'100%', display:'flex', justifyContent:'center', marginTop:'30px'}}>
-                  <Buttonn variant="contained" color="secondary" onClick={() => {handleFlip()}}>Volver al Login</Buttonn>
-                </div> 
-              </div>
-          </motion.div>
+                <div className="flip-card-back">
+                  <RegisterCard/> 
+                  <div style={{width:'100%', display:'flex', justifyContent:'center', marginTop:'30px'}}>
+                    <Buttonn variant="contained" color="secondary" onClick={() => {handleFlip()}}>Volver al Login</Buttonn>
+                  </div> 
+                </div>
+            </motion.div>
+          </div>
         </div>
-      </div>
+      )}
     </>
   )
 }

@@ -1,20 +1,35 @@
-import React,  { useState } from 'react'
+import React,  { useState, useContext } from 'react'
 import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
+import { loginContext } from './loginContext';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
 import Button from '@mui/material/Button';
 import 'animate.css';
 
 const LoginCard = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const { register, formState:{errors}, handleSubmit, getValues, setError, clearErrors} = useForm();
+  const { register, formState:{errors}, handleSubmit} = useForm();
+  const {setUser} = useContext(loginContext);
+  const {setToken} = useContext(loginContext);
+  
   const handlePassword = () => {
     setPasswordVisible(!passwordVisible);
   }
 
-  const logIn = (data) => {
-    console.log(data);
+  const logIn = async(data) => {
+    //console.log(data);
+    try {
+      const response = await axios.post('http://localhost:3002/usuarios/login', data);
+      //console.log(response); // Maneja la respuesta según sea necesario
+      setUser(response.data.data.usuario);
+      setToken(response.data.data.token);
+      console.log(response.data.data.usuario);
+      console.log(response.data.data.token);
+    } catch (error) {
+      console.error('Error en el login:', error);
+    }
   }  
 
 
@@ -25,7 +40,7 @@ const LoginCard = () => {
             <InputIcon className="pi pi-user"> </InputIcon>
             <InputText placeholder="Usuario o email" 
               className={errors.userEmail?.type === 'required' ? 'invalid' : ''}
-              {...register('userEmail', {
+              {...register('email', {
                 required:true 
               })}
             />
