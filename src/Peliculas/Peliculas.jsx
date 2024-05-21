@@ -83,23 +83,36 @@ const Peliculas = () => {
 
   return (
     <>
-      <Nav />
+      <Nav peli={true}/>
       <div className='container-generos'>
         <SimpleBar forceVisible="y" autoHide={false} className='simplebar-peliculas'>
           {pelisTodas && pelisTodas.map((genero, index)=>{
           return(
-            <div key={index}>
+            <div className={`${genero[0]}`} key={index}>
               <h1 className='genero'>{genero[0]}</h1>
               <div className='genero-content'>
               <Swiper modules={[Virtual, Navigation]}
-                slidesPerView={4}
+                slidesPerView={1}
                 centeredSlides={false}
                 spaceBetween={60}
                 pagination={{
                   type: 'fraction',
                 }}
-                navigation={true}
-                virtual
+                navigation={false}
+                breakpoints={{
+                  // when window width is >= 640px
+                  600: {
+                      slidesPerView: 2,
+                  },
+                  // when window width is >= 768px
+                  768: {
+                      slidesPerView: 3,
+                  },
+                  // when window width is >= 1024px
+                  1200: {
+                      slidesPerView: 4,
+                  },
+              }}
               >
                 {genero[1].map((x, index) => {
                   console.log(x);

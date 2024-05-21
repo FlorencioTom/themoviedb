@@ -54,6 +54,55 @@
     }
 }
 
+.filtro{
+    padding:20px;
+    border-radius: 30px;
+    background-color: #1565c0;
+    transition: background-color 0.2s, color 0.2s, transform 0.2s;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin-right: 20px;
+    width: auto;
+    height: 50px;
+    padding: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.circulo{
+
+}
+
+.filtroinput{
+    background-color: #1565c0;
+    color: rgb(255, 255, 255);
+    border-radius: 30px;
+    width: 43px;
+    transition: width 0.3s, margin-left 0.3s;
+    margin-left: 0px;
+    
+}
+.filtroinput:focus{
+   /* width: 200px; */ 
+}
+.filtroinput::placeholder {
+    color: rgb(255, 255, 255); /* Cambia "gray" al color que prefieras */
+}
+.pi-search{
+    color: white;
+    margin-left: 9px;
+}
+.filtroinput:enabled:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: none;
+    border-color: #2196f3;
+}
+
 .favorito:hover{
     background-color: #afc015; 
     transform: scale(1.1);   
@@ -67,6 +116,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.filtroinput{
+    border: none;
 }
 
 .invisible{

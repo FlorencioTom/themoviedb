@@ -5,11 +5,16 @@ import { Sidebar } from 'primereact/sidebar';
 import { Divider } from 'primereact/divider';
 import { NavLink } from 'react-router-dom';
 import { loginContext } from '../Login/loginContext';
+import { IconField } from "primereact/iconfield";
+import { InputIcon } from "primereact/inputicon";
+import { InputText } from "primereact/inputtext";
 import axios from 'axios';
 
 import './Nav.css';
-const Nav = ({info, estado}) => {
+const Nav = ({info, estado, peli}) => {
   const [visible, setVisible] = useState(false);
+  const [expand, setExpand] = useState(false);
+  const filtroGP = useRef(null);
   const {user, setUser, setToken, token} = useContext(loginContext);
 
   useEffect(() => {
@@ -70,6 +75,14 @@ const Nav = ({info, estado}) => {
     });
   }
 
+  const inputStyle = {
+    width: expand ? '200px' : '50px', // Cambia el ancho según el estado
+    transition: 'width 0.3s, margin-left 0.3s, color 0.3s', // Opcional: animación de transición
+    marginLeft: expand ? '10px' : '0px',
+    color: expand ? 'white' : '#1565c0'
+    // Agrega otros estilos aquí si es necesario
+  };
+
   return (
     <>
     <header className='header-desktop'>
@@ -97,8 +110,17 @@ const Nav = ({info, estado}) => {
               </li>
 
             </ul>
+            <div style={{display:'flex', alignItems:'center'}}>           
+            {peli && ( 
+              <div style={{marginRight:'30px'}} className='filtro'>
+                <IconField iconPosition="left"> 
+                  <InputIcon className="pi pi-search" onClick={() => setExpand(!expand)}> </InputIcon>
+                  <InputText className="filtroinput" style={inputStyle} placeholder=""/>
+                </IconField>
+              </div>
+            )}
             {!user && ( 
-              <span className='profileAccess no' onClick={() => {toggleLogin()}}> 
+              <span className='profileAccess no' onClick={() => {toggleLogin()}}>               
                 {!user && (
                   <FontAwesomeIcon icon={faUser} />
                 )}
@@ -117,6 +139,7 @@ const Nav = ({info, estado}) => {
                 )}
               </span>
             )}
+            </div>
         </nav>
     </header>
     <header className='header-mobile'>
