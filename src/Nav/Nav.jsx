@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faClapperboard, faBars,faMasksTheater, faFile, faTv, faHeart, faPowerOff} from '@fortawesome/free-solid-svg-icons';
 import { Sidebar } from 'primereact/sidebar';
 import { Divider } from 'primereact/divider';
+import { NavLink } from 'react-router-dom';
 import { loginContext } from '../Login/loginContext';
 import axios from 'axios';
 
@@ -69,7 +70,6 @@ const Nav = ({info, estado}) => {
     });
   }
 
-
   return (
     <>
     <header className='header-desktop'>
@@ -77,7 +77,7 @@ const Nav = ({info, estado}) => {
             <ul className='menu-list' onMouseEnter={(e) => hoverHeader(e.currentTarget)} onMouseLeave={(e) => outHoverHeader(e.currentTarget)}>
 
               <li className='menu-list-item' onMouseEnter={(e) => hover(e.currentTarget)} onMouseLeave={(e) => notHover(e.currentTarget)}>
-                Peliculas
+                <NavLink className='menu-list-item-link' to={'/peliculas'}>Peliculas</NavLink>
               </li>
 
               <li className='menu-list-item' onMouseEnter={(e) => hover(e.currentTarget)} onMouseLeave={(e) => notHover(e.currentTarget)}>

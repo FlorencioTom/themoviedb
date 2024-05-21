@@ -1,3 +1,13 @@
+.menu-list-item-link{
+    text-decoration:none;
+    color: black;
+    transition:color 0.3s;
+}
+
+.menu-list-item-link:hover{
+    color: rgb(255, 255, 255);
+}
+
 .header-desktop{
     width: 100%;
     position: absolute;
@@ -88,7 +98,6 @@
     margin-left: 20px;
     transition: transform 0.3s;
 }
-
 
 @media (max-width: 900px) {
     .header-desktop{
