@@ -4,7 +4,7 @@ import Nav from '../Nav/Nav';
 import SimpleBar from 'simplebar-react';
 import { Virtual, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Divider } from 'primereact/divider';
+import { Skeleton } from 'primereact/skeleton';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -70,9 +70,9 @@ const Peliculas = () => {
       let pelisClasificadas = [];
       arrayG.forEach(async x => {
         const movies = await pelisporgenero(x.id);
-        pelisClasificadas.push([x.name, movies]);  
+        pelisClasificadas.push([x.name, movies, true]);  
       });
-      console.log(pelisClasificadas);
+      //console.log(pelisClasificadas);
       setPelisTodas(pelisClasificadas);
 
       
@@ -81,53 +81,90 @@ const Peliculas = () => {
     }
   }
 
+  const filtroPelisTexto = (texto) => {
+    const peliculasFiltradas = pelisTodas.map((genero) => {
+      if (genero[0].toLowerCase().includes(texto.toLowerCase())) {
+        return [genero[0], genero[1], true];
+      } else {
+        return [genero[0], genero[1], false];
+      }
+    });
+    setPelisTodas(peliculasFiltradas);
+  }
+
   return (
     <>
-      <Nav peli={true}/>
+      <Nav peli={true} filtroPelisTexto={filtroPelisTexto}/>
       <div className='container-generos'>
         <SimpleBar forceVisible="y" autoHide={false} className='simplebar-peliculas'>
-          {pelisTodas && pelisTodas.map((genero, index)=>{
-          return(
-            <div className={`${genero[0]}`} key={index}>
-              <h1 className='genero'>{genero[0]}</h1>
-              <div className='genero-content'>
-              <Swiper modules={[Virtual, Navigation]}
-                slidesPerView={1}
-                centeredSlides={false}
-                spaceBetween={60}
-                pagination={{
-                  type: 'fraction',
-                }}
-                navigation={false}
-                breakpoints={{
-                  // when window width is >= 640px
-                  600: {
-                      slidesPerView: 2,
-                  },
-                  // when window width is >= 768px
-                  768: {
-                      slidesPerView: 3,
-                  },
-                  // when window width is >= 1024px
-                  1200: {
-                      slidesPerView: 4,
-                  },
-              }}
-              >
-                {genero[1].map((x, index) => {
-                  console.log(x);
-                  
-                    return(
-                      <SwiperSlide key={index} virtualIndex={index+1}>
-                        <img className='portada' src={'https://image.tmdb.org/t/p/w500'+x.backdrop_path} alt={x.title}/>
-                      </SwiperSlide>
-                    )
-                  
-                })} 
-              </Swiper>
+          {!pelisTodas && (
+            <>
+              <div>
+                <Skeleton className='skeleton-title' width="80px" height="25px"></Skeleton>
+                <div className='skeleton-container' style={{width:'calc(100%)', paddingLeft:'50px',paddingRight:'50px',display:'flex', gap:'60px', justifyContent:'space-between', flexGrow:1}}>
+                  <Skeleton className='skeleton'></Skeleton>
+                  <Skeleton className='skeleton'></Skeleton>
+                  <Skeleton className='skeleton'></Skeleton>
+                  <Skeleton className='skeleton'></Skeleton>
+                </div>
               </div>
-            </div>
-          )
+              <div>
+                <Skeleton className='skeleton-title' width="80px" height="25px"></Skeleton>
+                <div className='skeleton-container' style={{width:'calc(100%)', paddingLeft:'50px',paddingRight:'50px',display:'flex', gap:'60px', justifyContent:'space-between', flexGrow:1}}>
+                  <Skeleton className='skeleton'></Skeleton>
+                  <Skeleton className='skeleton'></Skeleton>
+                  <Skeleton className='skeleton'></Skeleton>
+                  <Skeleton className='skeleton'></Skeleton>
+                </div>
+              </div>
+            </>     
+          )}
+          {pelisTodas && pelisTodas.map((genero, index)=>{
+            console.log('visible', genero[2]);
+          if(genero[2]){
+            return(
+              <section  key={index}>
+                <h1 className='genero animate__animated animate__fadeIn animate__faster'>{genero[0]}</h1>
+                <div className='genero-content'>
+                <Swiper modules={[Virtual, Navigation]}
+                  slidesPerView={1}
+                  centeredSlides={false}
+                  spaceBetween={60}
+                  pagination={{
+                    type: 'fraction',
+                  }}
+                  navigation={false}
+                  breakpoints={{
+                    // when window width is >= 640px
+                    600: {
+                        slidesPerView: 2,
+                    },
+                    // when window width is >= 768px
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    // when window width is >= 1024px
+                    1200: {
+                        slidesPerView: 4,
+                    },
+                }}
+                >
+                  {genero[1].map((x, index) => {
+                    //console.log(x);
+                    
+                      return(
+                        <SwiperSlide key={index} virtualIndex={index+1} className='animate__animated animate__fadeIn'>
+                          <img className='portada' src={'https://image.tmdb.org/t/p/w500'+x.backdrop_path} alt={x.title}/>
+                        </SwiperSlide>
+                      )
+                    
+                  })} 
+                </Swiper>
+                </div>
+              </section>
+            )
+
+          } 
         })}
         {/*generos && generos.map((genero, index)=>{
           return(

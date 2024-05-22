@@ -11,7 +11,7 @@ import { InputText } from "primereact/inputtext";
 import axios from 'axios';
 
 import './Nav.css';
-const Nav = ({info, estado, peli}) => {
+const Nav = ({info, estado, peli, filtroPelisTexto}) => {
   const [visible, setVisible] = useState(false);
   const [expand, setExpand] = useState(false);
   const filtroGP = useRef(null);
@@ -83,6 +83,10 @@ const Nav = ({info, estado, peli}) => {
     // Agrega otros estilos aquí si es necesario
   };
 
+  const filtro = (texto) => { 
+    filtroPelisTexto(texto);
+  }
+
   return (
     <>
     <header className='header-desktop'>
@@ -115,7 +119,7 @@ const Nav = ({info, estado, peli}) => {
               <div style={{marginRight:'30px'}} className='filtro'>
                 <IconField iconPosition="left"> 
                   <InputIcon className="pi pi-search" onClick={() => setExpand(!expand)}> </InputIcon>
-                  <InputText className="filtroinput" style={inputStyle} placeholder=""/>
+                  <InputText className="filtroinput" onChange={(e) => filtro(e.target.value)} style={inputStyle} placeholder=""/>
                 </IconField>
               </div>
             )}

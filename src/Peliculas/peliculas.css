@@ -35,3 +35,62 @@
 .portada:hover{
     box-shadow: rgb(0, 0, 0) 0px 2px 4px;
 }
+
+.skeleton-title{
+    margin-left: 50px;
+    margin-bottom: 20px;
+}
+
+@media (min-width: 500px) {
+    .skeleton-container{
+        margin-left:"50px";
+        display:'flex';
+        gap:'20px';
+        flex-wrap: wrap;
+    }
+
+    .skeleton{
+        height:200px !important;
+        width:100% !important;
+    }
+}
+@media (min-width: 600px) {
+    .skeleton-container{
+        margin-left:"50px";
+        display:'flex';
+        gap:'20px';
+        flex-wrap: wrap;
+    }
+
+    .skeleton{
+        height:200px !important;
+        width:40% !important;
+    }
+}
+
+@media (min-width: 800px) {
+    .skeleton-container{
+        margin-left:"50px";
+        display:'flex';
+        gap:'10px';
+        flex-wrap: wrap;
+    }
+
+    .skeleton{
+        height:200px !important;
+        width:25% !important;
+    }
+}
+@media (min-width: 1000px) {
+    .skeleton-container{
+        margin-left:"50px";
+        display:'flex';
+        gap:'10px';
+        flex-wrap: wrap;
+    }
+
+    .skeleton{
+        height:200px !important;
+        width:20% !important;
+    }
+}
