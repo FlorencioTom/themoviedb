@@ -17,21 +17,38 @@ import Buttonn from '@mui/material/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import { loginContext } from './loginContext';
+import Scrolltop from '../Scrolltop/Scrolltop';
+        
 
 const LoginHome = () => {
   const token = import.meta.env.VITE_TOKEN_THEMOVIEDB_API;
   const [loginVisible, setLoginVisible] = useState(false);
   const [data, setData] = useState(null);
   const [flip, setFlip] = useState(false);
+  const [topScroll, setTopScroll] = useState(0);
   const [animatee, setAnimate] = useState(false);
   const containerLogin = useRef(null);
   const {user, tokenjwt} = useContext(loginContext);
+  const simpleBarRef = useRef(null); // Ref para SimpleBar
+  const scrollableNodeRef = useRef(null);
 
   useEffect(() => {
     fetchData();
   }, [tokenjwt, user]);
 
+  const goUp = (top) => {
+    if(top>300){
+      const scrollableNode = scrollableNodeRef.current;
+      scrollableNode.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }   
+  }
+
   const fetchData = async () => {
+    const scrollableNode = scrollableNodeRef.current;
+    scrollableNode.addEventListener('scroll', handleScroll);
     try {
       const response = await axios.get('https://api.themoviedb.org/3/discover/movie', {
         params: {
@@ -62,10 +79,18 @@ const LoginHome = () => {
     setLoginVisible(data);
   }
 
+  const handleScroll = () => {
+    const scrollableNode = scrollableNodeRef.current;
+    const scrollToop = scrollableNode.scrollTop;
+
+    //console.log('Clicked. Scrolled to:', scrollToop);
+    setTopScroll(scrollToop);
+  };
+  
   return (
     <>
       <Nav info={handleProfile} estado={!loginVisible}/>
-      <SimpleBar forceVisible="y" autoHide={false} style={{ maxHeight: '100vh' }}>
+      <SimpleBar onScroll={() => handleScroll()} scrollableNodeProps={{ ref: scrollableNodeRef }} forceVisible="y" autoHide={false} style={{ maxHeight: '100vh' }}>
         <div className='container-cards'>
             {data && data.results.map((movie, i) => (
                 <div key={i} className="card animate__animated">
@@ -73,10 +98,9 @@ const LoginHome = () => {
                 </div>
             ))}
         </div>
+        <Scrolltop top={topScroll} funcion={goUp}/>
       </SimpleBar>
-      <ScrollUpButton showUnder={100} >
-        <Button icon="pi pi-arrow-up" rounded aria-label="Filter" />
-      </ScrollUpButton>
+      
       {!user && (
         <div ref={containerLogin} className={`container-login animate__animated animate__faster ${loginVisible ? 'animate__fadeIn' : 'invisible'}`}>
           <div className='cerrar' onClick={() => setLoginVisible(!loginVisible)}>
@@ -112,6 +136,7 @@ const LoginHome = () => {
           </div>
         </div>
       )}
+      
     </>
   )
 }

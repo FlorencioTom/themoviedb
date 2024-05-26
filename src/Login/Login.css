@@ -123,5 +123,16 @@ html{
         width:25%;
     }
   }
+.p-scrolltop-helper{
+    position: fixed;
+    z-index: 999;
+    bottom: 90px; /* Ajusta la posición según sea necesario */
+    right: 90px; /* Ajusta la posición según sea necesario */
+    width: 50px;
+    height: 50px;
+    background-color: red; /* Asegúrate de que tenga un color de fondo visible */
+    border-radius: 50%;
+    cursor: pointer;
+}
 
 

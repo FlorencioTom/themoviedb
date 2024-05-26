@@ -98,7 +98,7 @@ const Nav = ({info, estado, peli, filtroPelisTexto}) => {
               </li>
 
               <li className='menu-list-item' onMouseEnter={(e) => hover(e.currentTarget)} onMouseLeave={(e) => notHover(e.currentTarget)}>
-                Series
+              <NavLink className='menu-list-item-link' to={'/series'}>Series</NavLink>
               </li>
 
               <li className='menu-list-item' onMouseEnter={(e) => hover(e.currentTarget)} onMouseLeave={(e) => notHover(e.currentTarget)}>

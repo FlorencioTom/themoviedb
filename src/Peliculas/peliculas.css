@@ -1,6 +1,10 @@
 .container-generos{
     padding-top: 125px;
 }
+.genero-content{
+    padding-left: 50px;
+    padding-right: 50px;
+}
 .genero{
     margin-top:0px;
     margin-bottom: 10px;
@@ -16,6 +20,7 @@
 }
 .simplebar-peliculas{
     height: calc(100vh - 125px);
+    position: relative;
 }
 .swiper{
     width:100%;
@@ -94,3 +99,5 @@
         width:20% !important;
     }
 }
+
+
