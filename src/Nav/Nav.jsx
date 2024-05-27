@@ -110,14 +110,6 @@ const Nav = ({info, estado, peli, filtroPelisTexto}) => {
                 </li>
               </NavLink>
 
-              <li className='menu-list-item' onMouseEnter={(e) => hover(e.currentTarget)} onMouseLeave={(e) => notHover(e.currentTarget)}>
-                Programas
-              </li>
-
-              <li className='menu-list-item ' onMouseEnter={(e) => hover(e.currentTarget)} onMouseLeave={(e) => notHover(e.currentTarget)}>
-                Documentales
-              </li>
-
               <li className='menu-list-item favorito' onMouseEnter={(e) => hover(e.currentTarget)} onMouseLeave={(e) => notHover(e.currentTarget)}>
                 Favoritos
               </li>
@@ -168,10 +160,6 @@ const Nav = ({info, estado, peli, filtroPelisTexto}) => {
             <li className='menu-sidebar-item'><FontAwesomeIcon icon={faClapperboard} /><span className='menu-sidebar-item-text'>Peliculas</span></li>
             <Divider type="dashed"/>
             <li className='menu-sidebar-item'><FontAwesomeIcon icon={faMasksTheater} /><span className='menu-sidebar-item-text'>Series</span></li>
-            <Divider type="dashed"/>
-            <li className='menu-sidebar-item'><FontAwesomeIcon icon={faTv} /><span className='menu-sidebar-item-text'>Programas</span></li>
-            <Divider type="dashed"/>
-            <li className='menu-sidebar-item'><FontAwesomeIcon icon={faFile} /><span className='menu-sidebar-item-text'>Documentales</span></li>
             <Divider type="dashed"/>
             <li className='menu-sidebar-item fav'><FontAwesomeIcon icon={faHeart} /><span className='menu-sidebar-item-text'>Favoritos</span></li>
             <Divider type="dashed"/>

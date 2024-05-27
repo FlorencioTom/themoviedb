@@ -18,6 +18,7 @@ import './peliculas.css';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { NavLink } from 'react-router-dom';
 
 const Peliculas = () => {
   const token = import.meta.env.VITE_TOKEN_THEMOVIEDB_API;
@@ -90,7 +91,7 @@ const Peliculas = () => {
       let pelisClasificadas = [];
       arrayG.forEach(async x => {
         const movies = await pelisporgenero(x.id);
-        pelisClasificadas.push([x.name, movies, true]);  
+        pelisClasificadas.push([x.name, movies, true, x.id]);  
       });
       //console.log(pelisClasificadas);
       setPelisTodas(pelisClasificadas);
@@ -104,9 +105,9 @@ const Peliculas = () => {
   const filtroPelisTexto = (texto) => {
     const peliculasFiltradas = pelisTodas.map((genero) => {
       if (genero[0].toLowerCase().includes(texto.toLowerCase())) {
-        return [genero[0], genero[1], true];
+        return [genero[0], genero[1], true, genero[3]];
       } else {
-        return [genero[0], genero[1], false];
+        return [genero[0], genero[1], false, genero[3]];
       }
     });
     setPelisTodas(peliculasFiltradas);
@@ -163,11 +164,12 @@ const Peliculas = () => {
             </>     
           )}
           {pelisTodas && pelisTodas.map((genero, index)=>{
-            //console.log('visible', genero[2]);
           if(genero[2]){
             return(
               <section  key={index}>
-                <h1 className='genero animate__animated animate__fadeIn animate__faster'>{genero[0]}</h1>
+                <h1 className='genero animate__animated animate__fadeIn animate__faster'>
+                  <NavLink className={'link-genero'} to={`/peliculas/genero/${genero[3]}`}> {genero[0]} </NavLink>
+                </h1>
                 <div className='genero-content'>
                 <Swiper modules={[Virtual, Navigation]}
                   slidesPerView={1}

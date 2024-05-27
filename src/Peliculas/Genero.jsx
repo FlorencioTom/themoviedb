@@ -1,8 +1,10 @@
-import React from 'react'
+import React from 'react';
+import { useParams } from 'react-router-dom';
 
 const Genero = () => {
+  let { id } = useParams();
   return (
-    <div> Genero </div>
+    <div> Genero: {id} </div>
   )
 }
 
