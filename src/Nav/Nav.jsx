@@ -16,6 +16,7 @@ const Nav = ({info, estado, peli, filtroPelisTexto}) => {
   const [expand, setExpand] = useState(false);
   const filtroGP = useRef(null);
   const {user, setUser, setToken, token} = useContext(loginContext);
+  const [peliculasRefDesk, setPeliculasRefDesk] = useState(false);
 
   useEffect(() => {
 
@@ -87,19 +88,27 @@ const Nav = ({info, estado, peli, filtroPelisTexto}) => {
     filtroPelisTexto(texto);
   }
 
+
   return (
     <>
     <header className='header-desktop'>
         <nav className='menu'>
-            <ul className='menu-list' onMouseEnter={(e) => hoverHeader(e.currentTarget)} onMouseLeave={(e) => outHoverHeader(e.currentTarget)}>
+            <ul className='menu-list'>
+              <NavLink to={'/peliculas'} className={({ isActive }) => isActive ? "activo" : ""}>
+                <li className={`menu-list-item`} 
+                  onMouseEnter={(e) => hover(e.currentTarget)} 
+                  onMouseLeave={(e) => notHover(e.currentTarget)}>
+                    Películas
+                </li>
+              </NavLink>
 
-              <li className='menu-list-item' onMouseEnter={(e) => hover(e.currentTarget)} onMouseLeave={(e) => notHover(e.currentTarget)}>
-                <NavLink className='menu-list-item-link' to={'/peliculas'}>Peliculas</NavLink>
-              </li>
-
-              <li className='menu-list-item' onMouseEnter={(e) => hover(e.currentTarget)} onMouseLeave={(e) => notHover(e.currentTarget)}>
-              <NavLink className='menu-list-item-link' to={'/series'}>Series</NavLink>
-              </li>
+              <NavLink to={'/series'} className={({ isActive }) => isActive ? "activo" : ""}>
+                <li className={`menu-list-item`} 
+                  onMouseEnter={(e) => hover(e.currentTarget)} 
+                  onMouseLeave={(e) => notHover(e.currentTarget)}>
+                    Series
+                </li>
+              </NavLink>
 
               <li className='menu-list-item' onMouseEnter={(e) => hover(e.currentTarget)} onMouseLeave={(e) => notHover(e.currentTarget)}>
                 Programas

@@ -3,6 +3,12 @@
     color: black;
     transition:color 0.3s;
 }
+.menu-list-item-link-active{
+    text-decoration:none;
+    color: white;
+    transition:color 0.3s;
+}
+
 
 .menu-list-item-link:hover{
     color: rgb(255, 255, 255);
@@ -183,4 +189,14 @@
     .header-desktop{
         display:block;
     }
+}
+.activo .menu-list-item{
+    background-color: #1565c0;  
+    color:white;
+    transform: scale(1.1);
+    text-decoration: none;
+}
+
+a{
+    text-decoration: none;
 }

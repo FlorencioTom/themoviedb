@@ -22,7 +22,6 @@ import 'swiper/css/navigation';
 const Peliculas = () => {
   const token = import.meta.env.VITE_TOKEN_THEMOVIEDB_API;
   const [generos, setGeneros] = useState(null);
-  const [ids, setIds] = useState(null);
   const [pelis, setPelis] = useState(null);
   const [pelisTodas, setPelisTodas] = useState(null);
   const [topScroll, setTopScroll] = useState(0);

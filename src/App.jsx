@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, suspense } from 'react';
+
 import {Route, BrowserRouter as Router, Routes} from "react-router-dom";
 import Login from './Login/LoginHome';
 import Peliculas from './Peliculas/Peliculas';
