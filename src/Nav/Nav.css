@@ -79,10 +79,6 @@
     
 }
 
-.circulo{
-
-}
-
 .filtroinput{
     background-color: #1565c0;
     color: rgb(255, 255, 255);
@@ -91,9 +87,6 @@
     transition: width 0.3s, margin-left 0.3s;
     margin-left: 0px;
     
-}
-.filtroinput:focus{
-   /* width: 200px; */ 
 }
 .filtroinput::placeholder {
     color: rgb(255, 255, 255); /* Cambia "gray" al color que prefieras */
