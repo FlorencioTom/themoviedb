@@ -1,5 +1,5 @@
 .container-generos{
-    padding-top: 125px;
+    margin-top: 14px;
 }
 .genero-content{
     padding-left: 50px;
@@ -7,16 +7,16 @@
 }
 .genero{
     margin-top:0px;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
     margin-left: 50px;
-    border-bottom: 0.5px solid rgb(182, 182, 182);
     cursor: pointer;
     display: inline-block;
-    transition: border-bottom 0.3s;
-
-    &:hover{
-        border-bottom: 0.5px solid rgb(30, 0, 255);    
-    }
+    transition:color 0.3s;
+    color:black;
+}
+.link-genero:hover{
+    color:#1565c0;
+    font-size: 30px;
 }
 .simplebar-peliculas{
     height: calc(100vh - 125px);
@@ -100,7 +100,17 @@
     }
 }
 .link-genero{
-    color:black;
+    color: black;
+    font-size: 25px;
+    transition: color 0.3s, font-size 0.3s;
+}
+
+.peliculas-de-genero {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    padding-left: 50px;
+    padding-right: 50px;
 }
 
 

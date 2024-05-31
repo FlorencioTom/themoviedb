@@ -148,12 +148,12 @@ const Nav = ({info, estado, peli, filtroPelisTexto}) => {
         </nav>
     </header>
     <header className='header-mobile'>
-      <div>
+      <div className='header-mobile-items'>
         <span className='profileAccess' onClick={() => setVisible(true)}> 
           <FontAwesomeIcon icon={faBars} />
         </span>      
       </div>
-      <div className="">
+      <div className='header-mobile-items'>
         <Sidebar visible={visible} onHide={() => setVisible(false)}>
           <ul className='menu-sidebar'>
             <Divider type="dashed"/>
@@ -188,6 +188,7 @@ const Nav = ({info, estado, peli, filtroPelisTexto}) => {
     </div>
 
     </header>
+    <div className='fade-bottom'></div>
     </>
   )
 }

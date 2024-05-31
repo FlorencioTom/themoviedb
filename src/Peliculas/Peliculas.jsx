@@ -13,6 +13,8 @@ import {animate, motion} from 'framer-motion';
 import LoginCard from '../Login/LoginCard';
 import RegisterCard from '../Login/RegisterCard';
 import Buttonn from '@mui/material/Button';
+import Flecha from '../flecha/Flecha';
+import '../flecha/flecha.css';
 import './peliculas.css';
 
 import 'swiper/css';
@@ -40,6 +42,7 @@ const Peliculas = () => {
     setAnimate(!animatee);
     setFlip(!flip);
   }
+
   const pelisporgenero = async(generoId) => {
     const scrollableNode = scrollableNodeRef.current;
     scrollableNode.addEventListener('scroll', handleScroll);
@@ -95,8 +98,6 @@ const Peliculas = () => {
       });
       //console.log(pelisClasificadas);
       setPelisTodas(pelisClasificadas);
-
-      
     } catch (error) {
       console.error('Error al obtener datos:', error);
     }
@@ -140,6 +141,7 @@ const Peliculas = () => {
       <Nav info={handleProfile} peli={true} filtroPelisTexto={filtroPelisTexto} estado={!loginVisible}/>
       <div className='container-generos'>
         <SimpleBar onScroll={() => handleScroll()} scrollableNodeProps={{ ref: scrollableNodeRef }} forceVisible="y" autoHide={false} className='simplebar-peliculas'>
+          <div className='fade-top'></div>
           <div>
           {!pelisTodas && (
             <>
@@ -167,9 +169,12 @@ const Peliculas = () => {
           if(genero[2]){
             return(
               <section  key={index}>
-                <h1 className='genero animate__animated animate__fadeIn animate__faster'>
-                  <NavLink className={'link-genero'} to={`/peliculas/genero/${genero[3]}`}> {genero[0]} </NavLink>
-                </h1>
+                  <div className='link link--arrowed animate__animated animate__zoomIn animate__faster' style={{display:'flex', gap:'15px', alignItems:'center', marginTop:'15px', marginBottom:'15px'}}>
+                    <h1 className='genero animate__animated animate__fadeIn animate__faster'>
+                      <NavLink className={'link-genero'} to={`/peliculas/genero/${genero[3]}`}> {genero[0]} </NavLink> 
+                    </h1>
+                    <Flecha/>
+                  </div>
                 <div className='genero-content'>
                 <Swiper modules={[Virtual, Navigation]}
                   slidesPerView={1}

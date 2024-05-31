@@ -5,7 +5,8 @@ import Login from './Login/LoginHome';
 import Peliculas from './Peliculas/Peliculas';
 import Series from './Series/Series';
 import {loginContext} from  './Login/loginContext'
-import Genero from './Peliculas/Genero';
+import GeneroPelis from './Peliculas/GeneroPelis';
+import GeneroSeries from './Series/GeneroSeries';
 import Pelicula from './Peliculas/Pelicula';
 
 const App = () => {
@@ -19,9 +20,11 @@ const App = () => {
           <Routes>
             <Route path='/' element={<Login />} />
             <Route path='/peliculas' element={<Peliculas/>} />
-            <Route path='/peliculas/genero/:id' element={<Genero/>} />
-            <Route path='/peliculas/pelicula/:id' element={<Pelicula/>} />
             <Route path='/series' element={<Series/>} />
+            <Route path='/peliculas/genero/:id' element={<GeneroPelis/>} />
+            <Route path='/series/genero/:id' element={<GeneroSeries/>} />
+            <Route path='/peliculas/pelicula/:id' element={<Pelicula/>} />
+            
           </Routes>
         </Router>
       </loginContext.Provider>

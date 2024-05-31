@@ -13,10 +13,13 @@ import {animate, motion} from 'framer-motion';
 import LoginCard from '../Login/LoginCard';
 import RegisterCard from '../Login/RegisterCard';
 import Buttonn from '@mui/material/Button';
+import Flecha from '../flecha/Flecha';
+import '../flecha/flecha.css';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { NavLink } from 'react-router-dom';
 
 
 const Series = () => {
@@ -50,22 +53,10 @@ const Series = () => {
               }
             });
 
-            //console.log('Generos: ',response.data.genres);
-            //setGeneros(response.data.genres);
-           /* let arr = [];
-
-            response.data.genres.forEach(async x => {
-              const seriesinfo = await getSeriesByGenre(x.id);
-              arr.push([x.name, seriesinfo, true]);
-            });
-            
-            console.log(arr);
-            setSeries(arr);
-            setGeneros(genres); */
             const genres = response.data.genres;
             const seriesData = await Promise.all(genres.map(async (genre) => {
                 const seriesInfo = await getSeriesByGenre(genre.id);
-                return [genre.name, seriesInfo.results, true];
+                return [genre.name, seriesInfo.results, true, genre.id];
             }));
 
             setSeries(seriesData);
@@ -97,9 +88,9 @@ const Series = () => {
     const filtroPelisTexto = (texto) => {
       const seriesFiltradas = series.map((genero) => {
         if (genero[0].toLowerCase().includes(texto.toLowerCase())) {
-          return [genero[0], genero[1], true];
+          return [genero[0], genero[1], true, genre.id];
         } else {
-          return [genero[0], genero[1], false];
+          return [genero[0], genero[1], false, genre.id];
         }
       });
       setSeries(seriesFiltradas);
@@ -128,6 +119,7 @@ const Series = () => {
       <Nav info={handleProfile} peli={true} filtroPelisTexto={filtroPelisTexto} estado={!loginVisible}/>
       <div className='container-generos'>
         <SimpleBar onScroll={() => handleScroll()} scrollableNodeProps={{ ref: scrollableNodeRef }} forceVisible="y" autoHide={false} className='simplebar-peliculas'>
+        <div className='fade-top'></div>
           <div>
           {!series && (
             <>
@@ -152,11 +144,16 @@ const Series = () => {
             </>     
           )}
           {series && series.map((genero, index)=>{
-            //console.log(x);
+            console.log(genero);
           if(genero[2]){
             return(
               <section  key={index}>
-                <h1 className='genero animate__animated animate__fadeIn animate__faster'>{genero[0]}</h1>
+                  <div className='link link--arrowed animate__animated animate__zoomIn animate__faster' style={{display:'flex', gap:'15px', alignItems:'center', marginTop:'15px', marginBottom:'15px'}}>
+                    <h1 className='genero animate__animated animate__fadeIn animate__faster'>
+                      <NavLink className={'link-genero'} to={`/series/genero/${genero[3]}`}> {genero[0]} </NavLink> 
+                    </h1>
+                    <Flecha/>
+                  </div>
                 <div className='genero-content'>
                 <Swiper modules={[Virtual, Navigation]}
                   slidesPerView={1}
