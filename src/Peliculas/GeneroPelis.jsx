@@ -35,7 +35,7 @@ const GeneroPelis = () => {
         }
       });
       setPelis(response.data.results);
-      console.log(response.data.results);
+      
       return response.data.results;
       
     } catch (error) {

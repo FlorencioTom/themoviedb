@@ -144,7 +144,6 @@ const Series = () => {
             </>     
           )}
           {series && series.map((genero, index)=>{
-            console.log(genero);
           if(genero[2]){
             return(
               <section  key={index}>

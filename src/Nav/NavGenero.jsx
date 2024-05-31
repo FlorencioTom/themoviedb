@@ -58,7 +58,7 @@ const NavGenero = ({info, estado, peli, filtroPelisTexto, id, generos}) => {
         arrayG.push(genero);
       });
       setGeneroPelis(arrayG);
-      console.log(arrayG);
+      //console.log(arrayG);
     } catch (error) {
       console.error('Error al obtener datos:', error);
     }
@@ -78,7 +78,7 @@ const NavGenero = ({info, estado, peli, filtroPelisTexto, id, generos}) => {
             arrayG.push(genero);
           });
           setGeneroSeries(arrayG);
-          console.log('series: ',arrayG);
+          //console.log('series: ',arrayG);
         } catch (error) {
           console.error('Error al obtener datos:', error);
         } 
@@ -194,7 +194,7 @@ const NavGenero = ({info, estado, peli, filtroPelisTexto, id, generos}) => {
                     {(generoPelis && generos=='pelis') && generoPelis.map((genero, index) => {
                         if(genero.id == id){
                             return(
-                              <>
+                              <div key={index} style={{display:'flex', gap:'25px'}}>
                                 <li className={`menu-list-item`} 
                                     onMouseEnter={(e) => hover(e.currentTarget)} 
                                     onMouseLeave={(e) => notHover(e.currentTarget)}>
@@ -207,14 +207,14 @@ const NavGenero = ({info, estado, peli, filtroPelisTexto, id, generos}) => {
                                         {genero.name}
                                     </li>
                                 </NavLink>
-                              </>
+                              </div>
                             )
                         }
                     })}
                     {(generoSeries && generos =='series') && generoSeries.map((genero, index) => {
                         if(genero.id == id){
                             return(
-                              <>
+                              <div key={index} style={{display:'flex', gap:'25px'}}>
                                 <li className={`menu-list-item`} 
                                     onMouseEnter={(e) => hover(e.currentTarget)} 
                                     onMouseLeave={(e) => notHover(e.currentTarget)}>
@@ -227,15 +227,28 @@ const NavGenero = ({info, estado, peli, filtroPelisTexto, id, generos}) => {
                                         {genero.name}
                                     </li>
                                 </NavLink>
-                              </>
+                              </div>
                                 
-                            )
+                          )
                         }
                     })}
                 </ul>
             </div>
             <OverlayPanel ref={op} className='ovelaypanel'>
-                {generoPelis && generoPelis.map((genero, index) => {
+                {(generoPelis && generos=='pelis') && generoPelis.map((genero, index) => {
+                        if(genero.id != id){
+                            return(
+                                <NavLink onClick={(e) => op.current.toggle(e)} key={index} to={`/peliculas/genero/${genero.id}`} className={({ isActive }) => isActive ? "activo" : ""}>
+                                    <li className={`menu-list-item`} 
+                                    onMouseEnter={(e) => hover(e.currentTarget)} 
+                                    onMouseLeave={(e) => notHover(e.currentTarget)}>
+                                        {genero.name}
+                                    </li>
+                                </NavLink>
+                            )
+                        }
+                })}
+                {(generoSeries && generos =='series') && generoSeries.map((genero, index) => {
                         if(genero.id != id){
                             return(
                                 <NavLink onClick={(e) => op.current.toggle(e)} key={index} to={`/peliculas/genero/${genero.id}`} className={({ isActive }) => isActive ? "activo" : ""}>
@@ -271,16 +284,16 @@ const NavGenero = ({info, estado, peli, filtroPelisTexto, id, generos}) => {
           {generoPelis && generoPelis.map((genero, index) => {
                         if(genero.id != id){
                             return(
-                              <>
+                              
                                 <NavLink key={index} to={`/peliculas/genero/${genero.id}`} >
                                     <li className={`menu-sidebar-item`} 
                                     onMouseEnter={(e) => hover(e.currentTarget)} 
                                     onMouseLeave={(e) => notHover(e.currentTarget)}>
                                         {genero.name}
                                     </li>
+                                    <Divider type="dashed"/>
                                 </NavLink>
-                                <Divider type="dashed"/>
-                              </>
+                                
                             )
                         }
                     })}
