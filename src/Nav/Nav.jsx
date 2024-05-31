@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faClapperboard, faBars,faMasksTheater, faFile, faTv, faHeart, faPowerOff} from '@fortawesome/free-solid-svg-icons';
 import { Sidebar } from 'primereact/sidebar';
 import { Divider } from 'primereact/divider';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { loginContext } from '../Login/loginContext';
 import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
@@ -17,9 +17,12 @@ const Nav = ({info, estado, peli, filtroPelisTexto}) => {
   const filtroGP = useRef(null);
   const {user, setUser, setToken, token} = useContext(loginContext);
   const [peliculasRefDesk, setPeliculasRefDesk] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
-
+    if(location.pathname === '/'){
+      console.log('estoy en la raiz');
+    } 
   },[user, token]);
 
   const toggleLogin = () => {
@@ -91,7 +94,7 @@ const Nav = ({info, estado, peli, filtroPelisTexto}) => {
 
   return (
     <>
-    <header className='header-desktop'>
+    <header className={`header-desktop ${location.pathname === '/'?'flotando':''}`} >
         <nav className='menu'>
             <ul className='menu-list'>
               <NavLink to={'/peliculas'} className={({ isActive }) => isActive ? "activo" : ""}>
@@ -157,11 +160,11 @@ const Nav = ({info, estado, peli, filtroPelisTexto}) => {
         <Sidebar visible={visible} onHide={() => setVisible(false)}>
           <ul className='menu-sidebar'>
             <Divider type="dashed"/>
-            <li className='menu-sidebar-item'><FontAwesomeIcon icon={faClapperboard} /><span className='menu-sidebar-item-text'>Peliculas</span></li>
+            <li className='menu-sidebar-item'><FontAwesomeIcon icon={faClapperboard} /><NavLink to={`/peliculas`} className='menu-sidebar-item-text'>Peliculas</NavLink></li>
             <Divider type="dashed"/>
-            <li className='menu-sidebar-item'><FontAwesomeIcon icon={faMasksTheater} /><span className='menu-sidebar-item-text'>Series</span></li>
+            <li className='menu-sidebar-item'><FontAwesomeIcon icon={faMasksTheater} /><NavLink to={`/series`} className='menu-sidebar-item-text'>Series</NavLink></li>
             <Divider type="dashed"/>
-            <li className='menu-sidebar-item fav'><FontAwesomeIcon icon={faHeart} /><span className='menu-sidebar-item-text'>Favoritos</span></li>
+            <li className='menu-sidebar-item fav'><FontAwesomeIcon icon={faHeart} /><NavLink to={`/favoritos`} className='menu-sidebar-item-text'>Favoritos</NavLink></li>
             <Divider type="dashed"/>
           </ul>
         </Sidebar>

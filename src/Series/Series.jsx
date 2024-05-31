@@ -87,10 +87,11 @@ const Series = () => {
 
     const filtroPelisTexto = (texto) => {
       const seriesFiltradas = series.map((genero) => {
+        console.log(genero);
         if (genero[0].toLowerCase().includes(texto.toLowerCase())) {
-          return [genero[0], genero[1], true, genre.id];
+          return [genero[0], genero[1], true, genero[3]];
         } else {
-          return [genero[0], genero[1], false, genre.id];
+          return [genero[0], genero[1], false, genero[3]];
         }
       });
       setSeries(seriesFiltradas);

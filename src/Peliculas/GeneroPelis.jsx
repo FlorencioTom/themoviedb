@@ -7,18 +7,25 @@ import { Skeleton } from 'primereact/skeleton';
 import Scrolltop from '../Scrolltop/Scrolltop';
 import { useParams, NavLink} from 'react-router-dom';
 import axios from 'axios';
+import { Paginator } from 'primereact/paginator';
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 
 const GeneroPelis = () => {
   const token = import.meta.env.VITE_TOKEN_THEMOVIEDB_API;
   const [pelis, setPelis] = useState(null);
   const [pagina, setPagina] = useState(1);
   const [topScroll, setTopScroll] = useState(0);
+  const [first, setFirst] = useState(0);
+  const [rows, setRows] = useState(20);
+  const [total, setTotal] = useState(null);
   const scrollableNodeRef = useRef(null);
   let { id } = useParams();
 
   useEffect(() => {
     moviesByGenre(id);
-  },[id]);
+  },[id, pagina]);
 
   const moviesByGenre = async(id) => {
     const scrollableNode = scrollableNodeRef.current;
@@ -34,6 +41,8 @@ const GeneroPelis = () => {
           Authorization: `Bearer ${token}` // Reemplaza 'tu_token_de_autenticacion' con tu token real
         }
       });
+      //console.log(response.data);
+      setTotal(response.data.total_results);
       setPelis(response.data.results);
       
       return response.data.results;
@@ -60,6 +69,12 @@ const GeneroPelis = () => {
       });
     }   
   }
+
+  const goToPage = (event) => {
+    setFirst(event.first);
+    setRows(event.rows);
+    setPagina(event.page+1);
+  }                            
 
   return (
     <>
@@ -93,7 +108,7 @@ const GeneroPelis = () => {
               return(
                   <div key={index} className='animate__animated animate__fadeIn'>
                     <div className='animate__animated animate__fadeIn'>
-                      <img className='portada' src={'https://image.tmdb.org/t/p/w500'+peli.backdrop_path} alt={peli.title}/>
+                      <img className='animate__bounceIn animate__faster portada' src={'https://image.tmdb.org/t/p/w500'+peli.backdrop_path} alt={peli.title}/>
                     </div>
                   </div> 
               )
@@ -101,8 +116,17 @@ const GeneroPelis = () => {
           </section>
         
         <Scrolltop top={topScroll} funcion={goUp}/>
+        <Paginator
+          template={{ layout: 'FirstPageLink PrevPageLink PageLinks NextPageLink' }}
+          first={first}
+          rows={rows}
+          pageLinkSize={5}
+          totalRecords={total}
+          onPageChange={goToPage}
+        />
         </SimpleBar>
       </div>
+
     </>
   )
 }

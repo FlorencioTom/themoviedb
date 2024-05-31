@@ -271,6 +271,13 @@ const NavGenero = ({info, estado, peli, filtroPelisTexto, id, generos}) => {
         </span>      
       </div>
       <div className='header-mobile-items'>
+        <li className={`menu-list-item`} 
+          onMouseEnter={(e) => hover(e.currentTarget)} 
+          onMouseLeave={(e) => notHover(e.currentTarget)}>
+          {generos=='pelis'?'Peliculas':'Series'}
+        </li>
+      </div>
+      <div className='header-mobile-items'>
         <Sidebar visible={visible} onHide={() => setVisible(false)}>
           <ul className='menu-sidebar'>
           <NavLink to={'/peliculas'}>
@@ -281,7 +288,7 @@ const NavGenero = ({info, estado, peli, filtroPelisTexto, id, generos}) => {
                     </li>
                 </NavLink>
           <Divider type="dashed"/>
-          {generoPelis && generoPelis.map((genero, index) => {
+          {(generoPelis && generos=='pelis') && generoPelis.map((genero, index) => {
                         if(genero.id != id){
                             return(
                               
@@ -296,15 +303,47 @@ const NavGenero = ({info, estado, peli, filtroPelisTexto, id, generos}) => {
                                 
                             )
                         }
-                    })}
+            })}
+            {(generoSeries && generos =='series') && generoSeries.map((genero, index) => {
+                        if(genero.id != id){
+                            return(                             
+                                <NavLink key={index} to={`/series/genero/${genero.id}`} >
+                                    <li className={`menu-sidebar-item`} 
+                                    onMouseEnter={(e) => hover(e.currentTarget)} 
+                                    onMouseLeave={(e) => notHover(e.currentTarget)}>
+                                        {genero.name}
+                                    </li>
+                                    <Divider type="dashed"/>
+                                </NavLink>
+                                
+                            )
+                        }
+            })}
+            
           </ul>
         </Sidebar>
-        
+
               <span className='profileAccess currentGenre' onClick={() => {toggleLogin()}}> 
-              {generoPelis && generoPelis.map((genero, index) => {
+              {(generoPelis && generos=='pelis') && generoPelis.map((genero, index) => {
                         if(genero.id == id){
                             return(
-                                <NavLink key={index} to={`/peliculas/genero/${genero.id}`} className={({ isActive }) => isActive ? "activo" : ""}>
+                              
+                                <NavLink style={{display:'flex'}} key={index} to={`/peliculas/genero/${genero.id}`} className={({ isActive }) => isActive ? "activo" : ""}>
+                                    <li className={`menu-list-item`} 
+                                      onMouseEnter={(e) => hover(e.currentTarget)} 
+                                      onMouseLeave={(e) => notHover(e.currentTarget)}>
+                                          {genero.name}
+                                    </li>
+                                </NavLink>
+                              
+                            )
+                        }
+                    })}
+                    
+                    {(generoSeries && generos =='series') && generoSeries.map((genero, index) => {
+                        if(genero.id == id){
+                            return(
+                                <NavLink key={index} to={`/series/genero/${genero.id}`} className={({ isActive }) => isActive ? "activo" : ""}>
                                     <li className={`menu-list-item`} 
                                     onMouseEnter={(e) => hover(e.currentTarget)} 
                                     onMouseLeave={(e) => notHover(e.currentTarget)}>
@@ -315,8 +354,6 @@ const NavGenero = ({info, estado, peli, filtroPelisTexto, id, generos}) => {
                         }
                     })}
               </span>
-            
-
     </div>
 
     </header>

@@ -1,13 +1,16 @@
-import React, { useState, suspense } from 'react';
-
+import React, { useState} from 'react';
 import {Route, BrowserRouter as Router, Routes} from "react-router-dom";
+
+import {loginContext} from  './Login/loginContext';
 import Login from './Login/LoginHome';
-import Peliculas from './Peliculas/Peliculas';
-import Series from './Series/Series';
-import {loginContext} from  './Login/loginContext'
+
 import GeneroPelis from './Peliculas/GeneroPelis';
-import GeneroSeries from './Series/GeneroSeries';
+import Peliculas from './Peliculas/Peliculas';
 import Pelicula from './Peliculas/Pelicula';
+
+import GeneroSeries from './Series/GeneroSeries';
+import Series from './Series/Series';
+import Serie from './Series/Serie';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -19,11 +22,14 @@ const App = () => {
         <Router>
           <Routes>
             <Route path='/' element={<Login />} />
+
             <Route path='/peliculas' element={<Peliculas/>} />
-            <Route path='/series' element={<Series/>} />
             <Route path='/peliculas/genero/:id' element={<GeneroPelis/>} />
-            <Route path='/series/genero/:id' element={<GeneroSeries/>} />
             <Route path='/peliculas/pelicula/:id' element={<Pelicula/>} />
+
+            <Route path='/series' element={<Series/>} />
+            <Route path='/series/genero/:id' element={<GeneroSeries/>} />
+            <Route path='/series/serie/:id' element={<Serie/>} />
             
           </Routes>
         </Router>

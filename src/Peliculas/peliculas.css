@@ -5,6 +5,13 @@
     padding-left: 50px;
     padding-right: 50px;
 }
+.peliculas-de-genero {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
 .genero{
     margin-top:0px;
     margin-bottom: 0px;
@@ -58,6 +65,13 @@
         height:200px !important;
         width:100% !important;
     }
+    .peliculas-de-genero {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 40px;
+        padding-left: 50px;
+        padding-right: 50px;
+    }
 }
 @media (min-width: 600px) {
     .skeleton-container{
@@ -70,6 +84,14 @@
     .skeleton{
         height:200px !important;
         width:40% !important;
+    }
+
+    .peliculas-de-genero {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+        padding-left: 50px;
+        padding-right: 50px;
     }
 }
 
@@ -85,6 +107,13 @@
         height:200px !important;
         width:25% !important;
     }
+    .peliculas-de-genero {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+        padding-left: 50px;
+        padding-right: 50px;
+    }
 }
 @media (min-width: 1000px) {
     .skeleton-container{
@@ -98,6 +127,15 @@
         height:200px !important;
         width:20% !important;
     }
+
+    .peliculas-de-genero {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 40px;
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+    
 }
 .link-genero{
     color: black;
@@ -105,12 +143,6 @@
     transition: color 0.3s, font-size 0.3s;
 }
 
-.peliculas-de-genero {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 40px;
-    padding-left: 50px;
-    padding-right: 50px;
-}
+
 
 
