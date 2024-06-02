@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 import SimpleBar from 'simplebar-react';
 import Scrolltop from '../Scrolltop/Scrolltop';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import Zoom from '@mui/material/Zoom';
 import './peliculas.css';
@@ -58,7 +57,7 @@ const Pelicula = () => {
       response.data.cast.filter((x) => {
         arrayG.push(x);
       });
-      console.log(arrayG);
+      //console.log(arrayG);
       setCast(arrayG); 
     } catch (error) {
       console.error('Error al obtener datos:', error);
@@ -67,6 +66,10 @@ const Pelicula = () => {
 
   const back = () => {
     navigate('/peliculas');
+  }
+
+  const goToActor = (ide) => {
+    navigate(`/actor/${ide}`);
   }
 
   const handleScroll = () => {
@@ -89,8 +92,8 @@ const Pelicula = () => {
   
   return (
     <>
-      <div style={{position:'absolute', marginTop:'25px', marginLeft:'25px'}}>
-        <li onClick={()=>{back()}}className={`menu-list-item atras`} >
+      <div style={{position:'absolute', marginTop:'25px', marginLeft:'25px', zIndex:'99'}}>
+        <li onClick={()=>{back()}} className={`menu-list-item atras`} >
           <FontAwesomeIcon icon={faArrowLeft} />
         </li>
       </div>
@@ -120,7 +123,7 @@ const Pelicula = () => {
                   {cast && cast.map((x, index) => {
                     if(x.profile_path != null && x.known_for_department=='Acting'){
                       return(
-                        <div key={index} style={{display:'flex', justifyContent:'start'}}>
+                        <div onClick={() => goToActor(x.id)} key={index} style={{display:'flex', justifyContent:'start'}}>
                           <Tooltip TransitionComponent={Zoom} title={x.name}>
                           <img className='img-cast' src={'https://image.tmdb.org/t/p/w500'+x.profile_path}/>
                           </Tooltip>
@@ -160,7 +163,7 @@ const Pelicula = () => {
                    {cast && cast.map((x, index) => {
                      if(x.profile_path != null && x.known_for_department=='Acting'){
                        return(
-                         <div key={index} style={{display:'flex', justifyContent:'start'}}>
+                         <div onClick={() => goToActor(x.id)} key={index} style={{display:'flex', justifyContent:'start'}}>
                            <img className='img-cast' src={'https://image.tmdb.org/t/p/w500'+x.profile_path}/>
                          </div>
                        ) 

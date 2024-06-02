@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useContext}  from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faClapperboard, faBars,faMasksTheater, faFile, faTv, faHeart, faPowerOff} from '@fortawesome/free-solid-svg-icons';
+import { faUser, faClapperboard, faBars, faMasksTheater, faTv, faHeart, faPowerOff} from '@fortawesome/free-solid-svg-icons';
 import { Sidebar } from 'primereact/sidebar';
 import { Divider } from 'primereact/divider';
 import { NavLink, useLocation } from 'react-router-dom';
@@ -113,6 +113,14 @@ const Nav = ({info, estado, peli, filtroPelisTexto}) => {
                 </li>
               </NavLink>
 
+              <NavLink to={'/actores'} className={({ isActive }) => isActive ? "activo" : ""}>
+                <li className={`menu-list-item`} 
+                  onMouseEnter={(e) => hover(e.currentTarget)} 
+                  onMouseLeave={(e) => notHover(e.currentTarget)}>
+                    Actores
+                </li>
+              </NavLink>
+
               <li className='menu-list-item favorito' onMouseEnter={(e) => hover(e.currentTarget)} onMouseLeave={(e) => notHover(e.currentTarget)}>
                 Favoritos
               </li>
@@ -162,7 +170,9 @@ const Nav = ({info, estado, peli, filtroPelisTexto}) => {
             <Divider type="dashed"/>
             <li className='menu-sidebar-item'><FontAwesomeIcon icon={faClapperboard} /><NavLink to={`/peliculas`} className='menu-sidebar-item-text'>Peliculas</NavLink></li>
             <Divider type="dashed"/>
-            <li className='menu-sidebar-item'><FontAwesomeIcon icon={faMasksTheater} /><NavLink to={`/series`} className='menu-sidebar-item-text'>Series</NavLink></li>
+            <li className='menu-sidebar-item'><FontAwesomeIcon icon={faTv} /><NavLink to={`/series`} className='menu-sidebar-item-text'>Series</NavLink></li>
+            <Divider type="dashed"/>
+            <li className='menu-sidebar-item'><FontAwesomeIcon icon={faMasksTheater} /><NavLink to={`/actores`} className='menu-sidebar-item-text'>Actores</NavLink></li>
             <Divider type="dashed"/>
             <li className='menu-sidebar-item fav'><FontAwesomeIcon icon={faHeart} /><NavLink to={`/favoritos`} className='menu-sidebar-item-text'>Favoritos</NavLink></li>
             <Divider type="dashed"/>

@@ -12,6 +12,9 @@ import GeneroSeries from './Series/GeneroSeries';
 import Series from './Series/Series';
 import Serie from './Series/Serie';
 
+import Actor from './Actores/Actor';
+import Actores from './Actores/Actores';
+
 const App = () => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
@@ -30,6 +33,9 @@ const App = () => {
             <Route path='/series' element={<Series/>} />
             <Route path='/series/genero/:id' element={<GeneroSeries/>} />
             <Route path='/series/serie/:id' element={<Serie/>} />
+
+            <Route path='/actores' element={<Actores/>} />
+            <Route path='/actor/:id' element={<Actor/>} />
             
           </Routes>
         </Router>
