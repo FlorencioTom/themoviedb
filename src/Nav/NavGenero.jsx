@@ -251,7 +251,7 @@ const NavGenero = ({info, estado, peli, filtroPelisTexto, id, generos}) => {
                 {(generoSeries && generos =='series') && generoSeries.map((genero, index) => {
                         if(genero.id != id){
                             return(
-                                <NavLink onClick={(e) => op.current.toggle(e)} key={index} to={`/peliculas/genero/${genero.id}`} className={({ isActive }) => isActive ? "activo" : ""}>
+                                <NavLink onClick={(e) => op.current.toggle(e)} key={index} to={`/series/genero/${genero.id}`} className={({ isActive }) => isActive ? "activo" : ""}>
                                     <li className={`menu-list-item`} 
                                     onMouseEnter={(e) => hover(e.currentTarget)} 
                                     onMouseLeave={(e) => notHover(e.currentTarget)}>

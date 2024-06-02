@@ -31,8 +31,6 @@
 }
 .swiper{
     width:100%;
-    padding-left:50px;
-    padding-right:50px;
 }
 .portada{
     width: 100%;
@@ -142,6 +140,131 @@
     font-size: 25px;
     transition: color 0.3s, font-size 0.3s;
 }
+
+.p-rating .p-rating-item.p-rating-item-active .p-rating-icon {
+    color: #1565c0;
+}
+.menu-list-genres {
+    display: flex;
+    gap: 15px;
+    list-style: none;
+    padding-right: 50px;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    font-size: 15px;
+    padding-left:0px;
+}
+
+.menu-list-item-genre{
+    padding: 10px;
+    border-radius: 30px;
+    background-color: white;
+    transition: background-color 0.2s, color 0.2s, transform 0.2s;
+    color: black;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 3px;
+    list-style: none;
+}
+
+.menu-list-item-genre:hover{
+    background-color: #1565c0;
+    color: white;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.img-cast{
+    width:100px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    cursor: pointer;
+    transition:transform 0.3s;
+}
+.slide-cast{
+    width: auto;
+}
+.grid-cast{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-auto-rows: minmax(100px, auto); /* Filas automáticas */
+    column-gap: 20px; /* Espacio entre columnas */
+    row-gap: 20px; /* Espacio entre filas */ 
+    width:100%; 
+}
+.simplebar-peli{
+    height: calc(100vh);
+    position: relative;
+}
+.simplebar-track.simplebar-horizontal {
+    left: 0;
+    height: 0px;
+}
+.simplebar-peli{
+    position: relative;
+    width: 100%;
+}
+.section-peli{
+    display: flex;
+    gap:10px;
+    flex-direction: column;
+}
+.container-peli{
+    display:flex;
+
+    width:100%;    
+}
+.img-portada-peli{
+    width:30%;
+    object-fit: cover;
+}
+
+.peli-info{
+    display:flex;
+    flex-direction:column;
+    width:70%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.titulo{
+    margin-top: 10px;
+}
+
+.img-cast:hover{
+    transform: scale(1.1);
+}
+@media (max-width: 700px) {
+    .section-peli{
+        overflow-y: auto;
+    }
+    .container-peli{
+        display: block;
+        gap:10px;
+        flex-direction: column;
+    }
+    .simplebar-peli{
+        height: calc(100vh);
+        position: relative;
+    }
+
+    .img-portada-peli {
+        width: 100%;
+        object-fit: cover;
+    }
+    .peli-info {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+
+
+
+
+
 
 
 

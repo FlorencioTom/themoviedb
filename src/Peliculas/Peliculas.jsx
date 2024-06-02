@@ -20,7 +20,7 @@ import './peliculas.css';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const Peliculas = () => {
   const token = import.meta.env.VITE_TOKEN_THEMOVIEDB_API;
@@ -34,6 +34,7 @@ const Peliculas = () => {
   const containerLogin = useRef(null);
   const [flip, setFlip] = useState(false);
   const [animatee, setAnimate] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getPeliculas();
@@ -136,6 +137,10 @@ const Peliculas = () => {
     setLoginVisible(data);
   }
 
+  const movieDetails = (id) => {
+    navigate(`/peliculas/pelicula/${id}`);
+  }
+
   return (
     <>
       <Nav info={handleProfile} peli={true} filtroPelisTexto={filtroPelisTexto} estado={!loginVisible}/>
@@ -200,10 +205,9 @@ const Peliculas = () => {
                 }}
                 >
                   {genero[1].map((x, index) => {
-                    //console.log(x);
                     
                       return(
-                        <SwiperSlide key={index} virtualIndex={index+1} className='animate__animated animate__fadeIn'>
+                        <SwiperSlide onClick={() => {movieDetails(x.id)}} key={index} virtualIndex={index+1} className='animate__animated animate__fadeIn'>
                           <img className='portada' src={'https://image.tmdb.org/t/p/w500'+x.backdrop_path} alt={x.title}/>
                         </SwiperSlide>
                       )

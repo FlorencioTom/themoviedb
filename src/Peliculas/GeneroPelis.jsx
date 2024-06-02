@@ -5,7 +5,7 @@ import { Virtual, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Skeleton } from 'primereact/skeleton';
 import Scrolltop from '../Scrolltop/Scrolltop';
-import { useParams, NavLink} from 'react-router-dom';
+import { useParams, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { Paginator } from 'primereact/paginator';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
@@ -21,11 +21,16 @@ const GeneroPelis = () => {
   const [rows, setRows] = useState(20);
   const [total, setTotal] = useState(null);
   const scrollableNodeRef = useRef(null);
+  const navigate = useNavigate();  
   let { id } = useParams();
 
   useEffect(() => {
     moviesByGenre(id);
   },[id, pagina]);
+
+  const movieDetails = (id) => {
+    navigate(`/peliculas/pelicula/${id}`);
+  }
 
   const moviesByGenre = async(id) => {
     const scrollableNode = scrollableNodeRef.current;
@@ -108,7 +113,7 @@ const GeneroPelis = () => {
               return(
                   <div key={index} className='animate__animated animate__fadeIn'>
                     <div className='animate__animated animate__fadeIn'>
-                      <img className='animate__bounceIn animate__faster portada' src={'https://image.tmdb.org/t/p/w500'+peli.backdrop_path} alt={peli.title}/>
+                      <img onClick={() => {movieDetails(peli.id)}} className='animate__bounceIn animate__faster portada' src={'https://image.tmdb.org/t/p/w500'+peli.backdrop_path} alt={peli.title}/>
                     </div>
                   </div> 
               )
