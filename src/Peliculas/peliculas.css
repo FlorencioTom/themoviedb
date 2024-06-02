@@ -195,6 +195,10 @@
     height: calc(100vh);
     position: relative;
 }
+.simplebar-actores{
+    height: calc(100vh - 125px);
+    position: relative;   
+}
 .simplebar-track.simplebar-horizontal {
     left: 0;
     height: 0px;
