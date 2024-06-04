@@ -279,6 +279,24 @@
     row-gap: 20px; /* Espacio entre filas */ 
     width:100%; 
 }
+.form-comentario{
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-between;
+}
+
+.p-inputtextarea{
+    flex: 1;
+    margin-right: 20px;
+}
+
+.comentarios{
+    height:90%;
+}
+
+.p-sidebar-header{
+    padding-bottom: 0px;
+}
 
 
 

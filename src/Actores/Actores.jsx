@@ -45,7 +45,7 @@ const Actores = () => {
               arrayG.push(x);
             });
 
-            console.log(arrayG);
+            //console.log(arrayG);
             setActores(arrayG);
             setTotal(response.data.total_results); 
         } catch (error) {

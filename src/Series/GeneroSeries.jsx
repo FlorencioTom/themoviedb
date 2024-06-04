@@ -5,7 +5,7 @@ import { Virtual, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Skeleton } from 'primereact/skeleton';
 import Scrolltop from '../Scrolltop/Scrolltop';
-import { useParams, NavLink} from 'react-router-dom';
+import { useParams, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { Paginator } from 'primereact/paginator';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
@@ -22,6 +22,7 @@ const GeneroSeries = () => {
   const [topScroll, setTopScroll] = useState(0);
   const scrollableNodeRef = useRef(null);
   let { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     seriesByGenre(id);
@@ -72,7 +73,11 @@ const GeneroSeries = () => {
     setFirst(event.first);
     setRows(event.rows);
     setPagina(event.page+1);
-  }  
+  } 
+  
+  const serieDetails = (ide) => {
+    navigate(`/series/serie/${ide}`);
+  }
 
   return (
     <>
@@ -104,7 +109,7 @@ const GeneroSeries = () => {
           <section className='peliculas-de-genero animate__animated animate__fadeIn'>
             {series && series.map((series, index)=>{
               return(
-                  <div key={index} className='animate__animated animate__fadeIn'>
+                  <div onClick={() => {serieDetails(series.id)}} key={index} className='animate__animated animate__fadeIn'>
                     <div className='animate__animated animate__fadeIn'>
                       <img className='portada' src={'https://image.tmdb.org/t/p/w500'+series.backdrop_path} alt={series.title}/>
                     </div>

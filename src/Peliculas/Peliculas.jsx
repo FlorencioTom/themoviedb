@@ -215,7 +215,7 @@ const Peliculas = () => {
                   })} 
                 </Swiper>
                 </div>
-              </section>
+              </section> 
             )
 
           } 

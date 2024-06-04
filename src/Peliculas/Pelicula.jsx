@@ -2,12 +2,17 @@ import {useParams, NavLink, useNavigate} from 'react-router-dom';
 import React, {useEffect, useState, useRef} from 'react';
 import { Rating } from "primereact/rating";
 import axios from 'axios';
+import { InputTextarea } from "primereact/inputtextarea";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 import SimpleBar from 'simplebar-react';
 import Scrolltop from '../Scrolltop/Scrolltop';
 import Tooltip from '@mui/material/Tooltip';
 import Zoom from '@mui/material/Zoom';
+import { Divider } from 'primereact/divider';
+import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
+import {Sidebar} from 'primereact/sidebar';
 import './peliculas.css';
 
 const Pelicula = () => {
@@ -17,8 +22,12 @@ const Pelicula = () => {
   const [topScroll, setTopScroll] = useState(0);
   const [cast, setCast] = useState(null);
   const scrollableNodeRef = useRef(null);
+  const [value, setValue] = useState('');
+  const [visible, setVisible] = useState(false);
+  const [visibleBottom, setVisibleBottom] = useState(false);
   const navigate = useNavigate(); 
   let { id } = useParams();
+
 
   useEffect(()=>{
     movieDetails();
@@ -115,7 +124,9 @@ const Pelicula = () => {
                 <ul className='menu-list-genres'>
                   {pelicula.genres.map((gen, index) => {
                       return(
-                        <li className={'menu-list-item-genre'} key={index}>{gen.name}</li>
+                        <NavLink key={index} to={`/peliculas/genero/${gen.id}`}>
+                          <li className={'menu-list-item-genre'} key={index}>{gen.name}</li>
+                        </NavLink>
                       ) 
                   })}
                 </ul>
@@ -132,7 +143,13 @@ const Pelicula = () => {
                     }
                   })} 
                 </div>
-                </SimpleBar>
+                <Divider align="left">
+                    <div className="inline-flex align-items-center">
+                        <Button label="Comentarios" icon="pi pi-external-link" onClick={() => setVisibleBottom(true)} />
+                    </div>
+                </Divider>
+              </SimpleBar>
+
               </div>
           </div>
           </>
@@ -170,16 +187,27 @@ const Pelicula = () => {
                      }
                    })} 
                  </div>
-                 
+                 <Divider align="left">
+                    <div className="inline-flex align-items-center">
+                        <Button label="Comentarios" icon="pi pi-external-link" onClick={() => setVisibleBottom(true)} />
+                    </div>
+                  </Divider>
                </div>
            </div>
            </>
          )}
        </section>
-     </SimpleBar>     
+     </SimpleBar>  
+        
       }
       
       <Scrolltop top={topScroll} funcion={goUp}/>
+      <Sidebar className={'comentarios'} visible={visibleBottom} position="bottom" onHide={() => setVisibleBottom(false)}>
+        <form className='form-comentario'>
+          <InputTextarea value={value} onChange={(e) => setValue(e.target.value)}  />
+          <Button icon="pi pi-send" onClick={() => setVisibleBottom(true)} />
+        </form>
+      </Sidebar>
     </>
   )
 }

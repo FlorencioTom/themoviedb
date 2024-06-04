@@ -8,6 +8,7 @@ import { loginContext } from '../Login/loginContext';
 import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
+import Swal from 'sweetalert2';
 import axios from 'axios';
 
 import './Nav.css';
@@ -91,6 +92,13 @@ const Nav = ({info, estado, peli, filtroPelisTexto}) => {
     filtroPelisTexto(texto);
   }
 
+  const goToFav = () => {
+    Swal.fire({
+      icon: "error",
+      title: "Tienes que iniciar sesion para acceder a tus favoritos"
+    });
+    setVisible(false);
+  }
 
   return (
     <>
@@ -121,7 +129,7 @@ const Nav = ({info, estado, peli, filtroPelisTexto}) => {
                 </li>
               </NavLink>
 
-              <li className='menu-list-item favorito' onMouseEnter={(e) => hover(e.currentTarget)} onMouseLeave={(e) => notHover(e.currentTarget)}>
+              <li className='menu-list-item favorito' onClick={() => {goToFav()}} onMouseEnter={(e) => hover(e.currentTarget)} onMouseLeave={(e) => notHover(e.currentTarget)}>
                 Favoritos
               </li>
 
@@ -168,13 +176,41 @@ const Nav = ({info, estado, peli, filtroPelisTexto}) => {
         <Sidebar visible={visible} onHide={() => setVisible(false)}>
           <ul className='menu-sidebar'>
             <Divider type="dashed"/>
-            <li className='menu-sidebar-item'><FontAwesomeIcon icon={faClapperboard} /><NavLink to={`/peliculas`} className='menu-sidebar-item-text'>Peliculas</NavLink></li>
+            <li className='menu-sidebar-item'>
+              <NavLink to={`/peliculas`} className={({ isActive }) => isActive ? "activo-mobile" : "menu-sidebar-item-text"} >
+                <div style={{display:'flex', gap:'20px'}}>
+                  <FontAwesomeIcon icon={faClapperboard} />
+                  Películas
+                </div>
+              </NavLink>
+            </li>
             <Divider type="dashed"/>
-            <li className='menu-sidebar-item'><FontAwesomeIcon icon={faTv} /><NavLink to={`/series`} className='menu-sidebar-item-text'>Series</NavLink></li>
+            <li className='menu-sidebar-item favorito-mobile'>
+              <NavLink to={`/series`} className={({ isActive }) => isActive ? "activo-mobile" : "menu-sidebar-item-text"} >
+                <div style={{display:'flex', gap:'20px'}}>
+                  <FontAwesomeIcon icon={faTv} />
+                  Series
+                </div>
+              </NavLink>
+            </li>
             <Divider type="dashed"/>
-            <li className='menu-sidebar-item'><FontAwesomeIcon icon={faMasksTheater} /><NavLink to={`/actores`} className='menu-sidebar-item-text'>Actores</NavLink></li>
+            <li className='menu-sidebar-item'>
+              <NavLink to={`/actores`} className={({ isActive }) => isActive ? "activo-mobile" : "menu-sidebar-item-text"} >
+                <div style={{display:'flex', gap:'20px'}}>
+                  <FontAwesomeIcon icon={faMasksTheater} />
+                  Actores
+                </div>
+              </NavLink>
+            </li>
             <Divider type="dashed"/>
-            <li className='menu-sidebar-item fav'><FontAwesomeIcon icon={faHeart} /><NavLink to={`/favoritos`} className='menu-sidebar-item-text'>Favoritos</NavLink></li>
+            <li className='menu-sidebar-item' onClick={() => {goToFav()}}>
+              <NavLink className={'menu-sidebar-item-text'}>
+                <div style={{display:'flex', gap:'20px'}}>
+                  <FontAwesomeIcon icon={faHeart} />
+                  Favoritos
+                </div>
+              </NavLink>
+            </li>
             <Divider type="dashed"/>
           </ul>
         </Sidebar>

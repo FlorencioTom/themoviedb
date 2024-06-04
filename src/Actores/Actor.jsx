@@ -13,6 +13,7 @@ const Actor = () => {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 700);
     const token = import.meta.env.VITE_TOKEN_THEMOVIEDB_API;
     const [filmografia, setFilmografia] = useState(null);
+    const [seriegrafia, setSeriegrafia] = useState(null);
     const [imagenes, setImagenes] = useState(null);
     const [details, setDetails] = useState(null);
     const [topScroll, setTopScroll] = useState(0);
@@ -24,6 +25,7 @@ const Actor = () => {
         getFilmografia(); 
         getImagen();
         getActorDetails();
+        getSerieGrafia();
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 700);
           };
@@ -66,6 +68,25 @@ const Actor = () => {
         } 
     }
 
+    const getSerieGrafia = async() => {
+      try {
+          const response = await axios.get(`https://api.themoviedb.org/3/person/${id}/tv_credits`, {
+            headers: {
+              accept: 'application/json',
+              Authorization: `Bearer ${token}` 
+            }
+          });
+          let arrayG = [];
+          response.data.cast.filter((x) => {
+            arrayG.push(x);
+          });
+          console.log(arrayG);
+          setSeriegrafia(arrayG);
+      } catch (error) {
+          console.error('Error al obtener datos:', error);
+      }     
+    }
+
     const getImagen = async() => {
         try {
             const response = await axios.get(`https://api.themoviedb.org/3/person/${id}/images`, {
@@ -98,6 +119,10 @@ const Actor = () => {
         navigate(`/peliculas/pelicula/${ide}`);
     }
 
+    const goToSerie = (ide) => {
+      navigate(`/series/serie/${ide}`);
+    }
+
     const back = () => {
         navigate('/peliculas');
     }
@@ -121,19 +146,35 @@ const Actor = () => {
                     <p>{details.biography} </p>
                   </div>
                   <div className='grid-filmografi'>
-                        {filmografia && filmografia.map((x, index) => {
+                      {filmografia && filmografia.map((x, index) => {
                         return(
-                                <Tooltip key={index+100} TransitionComponent={Zoom} title={x.title}>
+                          <Tooltip key={index+100} TransitionComponent={Zoom} title={x.title}>
                             <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                {x.backdrop_path == null && (
-                                    <span onClick={() => {goToMovie(x.id)}}> imagen no disponible</span>
-                                )}
-                                {x.backdrop_path != null && (
+                                {x.poster_path == null && (
                                     <img onClick={() => {goToMovie(x.id)}} className='img-filmografi' src={'https://image.tmdb.org/t/p/w500'+x.backdrop_path}/>
+                                )}
+                                {x.poster_path != null && (
+                                    <img onClick={() => {goToMovie(x.id)}} className='img-filmografi' src={'https://image.tmdb.org/t/p/w500'+x.poster_path}/>
                                 )}                                
                             </div>
-                                </Tooltip>
+                          </Tooltip>
                         ) 
+                      })} 
+                  </div>
+                  <div className='grid-filmografi'>
+                        {seriegrafia && seriegrafia.map((x, index) => {
+                          return(
+                            <Tooltip key={index+100} TransitionComponent={Zoom} title={x.name}>
+                              <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                                  {x.poster_path == null && (
+                                      <span onClick={() => {goToSerie(x.id)}}> imagen no disponible</span>
+                                  )}
+                                  {x.poster_path != null && (
+                                      <img onClick={() => {goToSerie(x.id)}} className='img-filmografi' src={'https://image.tmdb.org/t/p/w500'+x.poster_path}/>
+                                  )}                                
+                              </div>
+                            </Tooltip>
+                          ) 
                         })} 
                     </div>
                   </SimpleBar>
@@ -155,18 +196,34 @@ const Actor = () => {
                   </div>
                   <div className='grid-filmografi'>
                         {filmografia && filmografia.map((x, index) => {
-                        return(
-                                <Tooltip key={index} TransitionComponent={Zoom} title={x.title}>
-                            <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                {x.backdrop_path == null && (
-                                    <span onClick={() => {goToMovie(x.id)}}>imagen no disponible</span>
-                                )}
-                                {x.backdrop_path != null && (
-                                    <img onClick={() => {goToMovie(x.id)}} className='img-filmografi' src={'https://image.tmdb.org/t/p/w500'+x.backdrop_path}/>
-                                )}                                
-                            </div>
-                                </Tooltip>
-                        ) 
+                          return(
+                            <Tooltip key={index} TransitionComponent={Zoom} title={x.title}>
+                              <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                                  {x.poster_path == null && (
+                                      <span onClick={() => {goToMovie(x.id)}}>imagen no disponible</span>
+                                  )}
+                                  {x.poster_path != null && (
+                                      <img onClick={() => {goToMovie(x.id)}} className='img-filmografi' src={'https://image.tmdb.org/t/p/w500'+x.poster_path}/>
+                                  )}                                
+                              </div>
+                            </Tooltip>
+                          ) 
+                        })} 
+                    </div>
+                    <div className='grid-filmografi'>
+                        {seriegrafia && seriegrafia.map((x, index) => {
+                          return(
+                            <Tooltip key={index+100} TransitionComponent={Zoom} title={x.name}>
+                              <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                                  {x.poster_path == null && (
+                                      <span onClick={() => {goToSerie(x.id)}}> imagen no disponible</span>
+                                  )}
+                                  {x.poster_path != null && (
+                                      <img onClick={() => {goToSerie(x.id)}} className='img-filmografi' src={'https://image.tmdb.org/t/p/w500'+x.poster_path}/>
+                                  )}                                
+                              </div>
+                            </Tooltip>
+                          ) 
                         })} 
                     </div>
                 </div>

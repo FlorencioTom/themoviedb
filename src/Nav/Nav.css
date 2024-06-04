@@ -223,7 +223,12 @@ a.menu-sidebar-item-text{
     transform: scale(1.1);
     text-decoration: none;
 }
-
+.activo-mobile{
+    color:#1565c0;
+}
+.activo-mobile-fav{
+    color:#849500;   
+}
 a{
     text-decoration: none;
 }
@@ -271,3 +276,6 @@ a{
 .menu-sidebar-item{
     color:black;
 }
+
+
+

@@ -14,12 +14,12 @@ import LoginCard from '../Login/LoginCard';
 import RegisterCard from '../Login/RegisterCard';
 import Buttonn from '@mui/material/Button';
 import Flecha from '../flecha/Flecha';
+import { NavLink, useNavigate } from 'react-router-dom';
 import '../flecha/flecha.css';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import { NavLink } from 'react-router-dom';
 
 
 const Series = () => {
@@ -33,6 +33,7 @@ const Series = () => {
     const containerLogin = useRef(null);
     const [flip, setFlip] = useState(false);
     const [animatee, setAnimate] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         getGenero();
@@ -115,6 +116,10 @@ const Series = () => {
       setTopScroll(scrollToop);
     };
 
+    const serieDetails = (ide) => {
+      navigate(`/series/serie/${ide}`);
+    }
+
     return (
       <>
       <Nav info={handleProfile} peli={true} filtroPelisTexto={filtroPelisTexto} estado={!loginVisible}/>
@@ -182,7 +187,7 @@ const Series = () => {
                     //console.log(x);
                     
                       return(
-                        <SwiperSlide key={index} virtualIndex={index+1} className='animate__animated animate__fadeIn'>
+                        <SwiperSlide onClick={() => {serieDetails(x.id)}} key={index} virtualIndex={index+1} className='animate__animated animate__fadeIn'>
                           <img className='portada' src={'https://image.tmdb.org/t/p/w500'+x.backdrop_path} alt={x.title}/>
                         </SwiperSlide>
                       )
