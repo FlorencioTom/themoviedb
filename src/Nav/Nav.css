@@ -139,6 +139,11 @@
     transform: scale(1.1);   
 }
 
+.enFav{
+    background-color: #afc015; 
+    transform: scale(1.1);   
+}
+
 .profileAccess{
     margin-right: 50px;
     width: 50px;

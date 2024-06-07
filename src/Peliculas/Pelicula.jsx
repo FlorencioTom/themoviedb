@@ -1,10 +1,10 @@
 import {useParams, NavLink, useNavigate} from 'react-router-dom';
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, useContext} from 'react';
 import { Rating } from "primereact/rating";
 import axios from 'axios';
 import { InputTextarea } from "primereact/inputtextarea";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
+import {faArrowLeft, faHeartCirclePlus, faHeart} from '@fortawesome/free-solid-svg-icons';
 import SimpleBar from 'simplebar-react';
 import Scrolltop from '../Scrolltop/Scrolltop';
 import Tooltip from '@mui/material/Tooltip';
@@ -13,6 +13,8 @@ import { Divider } from 'primereact/divider';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import {Sidebar} from 'primereact/sidebar';
+import { loginContext } from '../Login/loginContext';
+import { Toast } from 'primereact/toast';
 import './peliculas.css';
 
 const Pelicula = () => {
@@ -25,6 +27,10 @@ const Pelicula = () => {
   const [value, setValue] = useState('');
   const [visible, setVisible] = useState(false);
   const [visibleBottom, setVisibleBottom] = useState(false);
+  const {user, setUser} = useContext(loginContext);
+  const [isPeliFav, setIsPeliFav] = useState(false);
+  const [misFav, setMisfav] = useState(null);
+  const toastBottomCenter = useRef(null);
   const navigate = useNavigate(); 
   let { id } = useParams();
 
@@ -32,13 +38,36 @@ const Pelicula = () => {
   useEffect(()=>{
     movieDetails();
     getCast();
+    if(user){
+      getUser();
+    }
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 700);
-    };
+    }
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  },[]);
+  },[user]);
+
+  const showToast = (severity, summary, detail) => {
+    if (toastBottomCenter.current) {
+      toastBottomCenter.current.show({ severity, summary, detail, life: 3000 });
+    }
+  }
+
+  const getUser = async() => {
+    if(user){
+      try {
+        const response = await axios.get(`http://localhost:3002/usuarios/${user._id}`);
+        console.log(response.data.data.favorites);
+        setMisfav(response.data.data.favorites);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }else{
+      console.log('No estas logeado')
+    }
+  }
 
   const movieDetails = async() => {
 
@@ -98,9 +127,36 @@ const Pelicula = () => {
       });
     }   
   }
+
+  const addFavorites = async(ide) => {
+    //console.log(user._id);
+    let data = {type:'movie', idPeli:ide, action:'add'}
+    try {
+      const response = await axios.post(`http://localhost:3002/usuarios/${user._id}/favoritos`, data);
+      console.log(response.data.data);
+      setUser(response.data.data);
+      showToast('success', 'Pelicula añadida a favoritos', '');
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  const deleteFavorites = async(ide) => {
+    //console.log(user._id);
+    let data = {type:'movie', idPeli:ide, action:'delete'}
+    try {
+      const response = await axios.post(`http://localhost:3002/usuarios/${user._id}/favoritos`, data);
+      console.log(response.data.data);
+      setUser(response.data.data);
+      showToast('info', 'Pelicula eliminada de favoritos', '');
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
   
   return (
     <>
+      <Toast ref={toastBottomCenter} position="bottom-center" />
       <div style={{position:'absolute', marginTop:'25px', marginLeft:'25px', zIndex:'99'}}>
         <li onClick={()=>{back()}} className={`menu-list-item atras`} >
           <FontAwesomeIcon icon={faArrowLeft} />
@@ -114,10 +170,35 @@ const Pelicula = () => {
             <img className='img-portada-peli' src={'https://image.tmdb.org/t/p/w500'+pelicula.poster_path} alt={pelicula.title}/>
               <div className='peli-info'>
               <SimpleBar scrollableNodeProps={{ ref: scrollableNodeRef }} forceVisible="y" autoHide={false} className='simplebar-peli'>
-                <div style={{display:'flex'}}>
-                  <h1 className='titulo'>{pelicula.title}</h1>
-                  
-                </div>
+                <h1 className='titulo' style={{marginBottom:'5px'}}>{pelicula.title}</h1>
+                
+                {misFav && misFav.some(x => x.contentId == pelicula.id) ? (
+                  <p style={{ margin: '5px', cursor: 'pointer' }}>
+                    <FontAwesomeIcon
+                      onClick={() => { deleteFavorites(pelicula.id) }}
+                      icon={faHeart}
+                      style={{
+                        fontSize: '30px',
+                        color: 'red',
+                        cursor: 'pointer'
+                      }}
+                    />
+                  </p>
+
+                ) : (
+                  <p style={{ margin: '5px', cursor: 'pointer' }}>
+                  <FontAwesomeIcon
+                    onClick={() => { addFavorites(pelicula.id) }}
+                    icon={faHeartCirclePlus}
+                    style={{
+                      fontSize: '30px',
+                      color: 'grey',
+                      cursor: 'pointer'
+                    }}
+                  />
+                </p>
+                )}
+
                 <span>{pelicula.release_date}</span>
                 <Rating style={{marginTop:'20px'}} value={pelicula.vote_average} readOnly cancel={false} stars={10} />
                 <p>{pelicula.overview}</p>
@@ -164,8 +245,33 @@ const Pelicula = () => {
            <div className='container-peli'>
              <img className='img-portada-peli' src={'https://image.tmdb.org/t/p/w500'+pelicula.poster_path} alt={pelicula.title}/>
                <div className='peli-info'>
-               
-                 <h1 className='titulo'>{pelicula.title}</h1>
+                 <h1 className='titulo' style={{marginBottom:'5px'}}>{pelicula.title}</h1>
+                 {misFav && misFav.some(x => x.contentId == pelicula.id) ? (
+                  <p style={{ margin: '5px', cursor: 'pointer' }}>
+                    <FontAwesomeIcon
+                      onClick={() => { deleteFavorites(pelicula.id) }}
+                      icon={faHeart}
+                      style={{
+                        fontSize: '30px',
+                        color: 'red',
+                        cursor: 'pointer'
+                      }}
+                    />
+                  </p>
+
+                ) : (
+                  <p style={{ margin: '5px', cursor: 'pointer' }}>
+                  <FontAwesomeIcon
+                    onClick={() => { addFavorites(pelicula.id) }}
+                    icon={faHeartCirclePlus}
+                    style={{
+                      fontSize: '30px',
+                      color: 'grey',
+                      cursor: 'pointer'
+                    }}
+                  />
+                </p>
+                )}
                  <span>{pelicula.release_date}</span>
                  <Rating style={{marginTop:'20px'}} value={pelicula.vote_average} readOnly cancel={false} stars={10} />
                  <p>{pelicula.overview}</p>

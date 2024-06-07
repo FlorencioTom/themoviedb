@@ -19,7 +19,6 @@ import { faX } from '@fortawesome/free-solid-svg-icons';
 import { loginContext } from './loginContext';
 import Scrolltop from '../Scrolltop/Scrolltop';
         
-
 const LoginHome = () => {
   const token = import.meta.env.VITE_TOKEN_THEMOVIEDB_API;
   const [loginVisible, setLoginVisible] = useState(false);
@@ -29,7 +28,7 @@ const LoginHome = () => {
   const [animatee, setAnimate] = useState(false);
   const containerLogin = useRef(null);
   const {user, tokenjwt} = useContext(loginContext);
-  const simpleBarRef = useRef(null); // Ref para SimpleBar
+  const simpleBarRef = useRef(null);
   const scrollableNodeRef = useRef(null);
 
   useEffect(() => {
@@ -100,7 +99,6 @@ const LoginHome = () => {
         </div>
         <Scrolltop top={topScroll} funcion={goUp}/>
       </SimpleBar>
-      
       {!user && (
         <div ref={containerLogin} className={`container-login animate__animated animate__faster ${loginVisible ? 'animate__fadeIn' : 'invisible'}`}>
           <div className='cerrar' onClick={() => setLoginVisible(!loginVisible)}>

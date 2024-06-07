@@ -3,22 +3,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faClapperboard, faBars, faMasksTheater, faTv, faHeart, faPowerOff} from '@fortawesome/free-solid-svg-icons';
 import { Sidebar } from 'primereact/sidebar';
 import { Divider } from 'primereact/divider';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { loginContext } from '../Login/loginContext';
 import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
+import { Toast } from 'primereact/toast';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
 import './Nav.css';
-const Nav = ({info, estado, peli, filtroPelisTexto}) => {
+const Nav = ({info, estado, peli, filtroPelisTexto, enFav}) => {
   const [visible, setVisible] = useState(false);
   const [expand, setExpand] = useState(false);
   const filtroGP = useRef(null);
   const {user, setUser, setToken, token} = useContext(loginContext);
   const [peliculasRefDesk, setPeliculasRefDesk] = useState(false);
   const location = useLocation();
+  const toastTopCenter = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if(location.pathname === '/'){
@@ -28,6 +31,12 @@ const Nav = ({info, estado, peli, filtroPelisTexto}) => {
 
   const toggleLogin = () => {
     info(estado);
+  }
+
+  const showToast = (severity, summary, detail) => {
+    if (toastTopCenter.current) {
+      toastTopCenter.current.show({ severity, summary, detail, life: 3000 });
+    }
   }
 
   const logout = async() => {
@@ -43,8 +52,10 @@ const Nav = ({info, estado, peli, filtroPelisTexto}) => {
       setUser(null);
       setToken(null);
       console.log(response.data);
+      showToast('info', 'Sesion cerrada', 'Cerraste la sesion');
     } catch (error) {
       console.error('Error en el logout:', error);
+      showToast('error', 'Error de cerrar sesion', 'Ocurrió un error al Cerrar la sesion.');
     }
   }
 
@@ -93,15 +104,20 @@ const Nav = ({info, estado, peli, filtroPelisTexto}) => {
   }
 
   const goToFav = () => {
-    Swal.fire({
-      icon: "error",
-      title: "Tienes que iniciar sesion para acceder a tus favoritos"
-    });
-    setVisible(false);
+    if(!token){
+      Swal.fire({
+        icon: "error",
+        title: "Tienes que iniciar sesion para acceder a tus favoritos"
+      });
+    }else{
+      navigate('/favoritos');
+    }
+    //setVisible(false);
   }
 
   return (
     <>
+    <Toast ref={toastTopCenter} position="top-center" />
     <header className={`header-desktop ${location.pathname === '/'?'flotando':''}`} >
         <nav className='menu'>
             <ul className='menu-list'>
@@ -129,7 +145,7 @@ const Nav = ({info, estado, peli, filtroPelisTexto}) => {
                 </li>
               </NavLink>
 
-              <li className='menu-list-item favorito' onClick={() => {goToFav()}} onMouseEnter={(e) => hover(e.currentTarget)} onMouseLeave={(e) => notHover(e.currentTarget)}>
+              <li className={`menu-list-item favorito ${enFav?'enFav':''}`} onClick={() => {goToFav()}} onMouseEnter={(e) => hover(e.currentTarget)} onMouseLeave={(e) => notHover(e.currentTarget)}>
                 Favoritos
               </li>
 
@@ -149,7 +165,10 @@ const Nav = ({info, estado, peli, filtroPelisTexto}) => {
                   <FontAwesomeIcon icon={faUser} />
                 )}
                 {user && (
-                  <FontAwesomeIcon icon={faPowerOff}/>
+                  <>
+                    {showToast('success', 'Sesión iniciada', '.')} {/* Llama a showToast cuando el usuario inicia sesión */}
+                    <FontAwesomeIcon icon={faPowerOff} onClick={() => toggleLogin()} />
+                  </>
                 )}
               </span>
             )}
