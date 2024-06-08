@@ -15,6 +15,7 @@ import { Dialog } from 'primereact/dialog';
 import {Sidebar} from 'primereact/sidebar';
 import { loginContext } from '../Login/loginContext';
 import { Toast } from 'primereact/toast';
+import Swal from 'sweetalert2';
 import './peliculas.css';
 
 const Pelicula = () => {
@@ -130,14 +131,21 @@ const Pelicula = () => {
 
   const addFavorites = async(ide) => {
     //console.log(user._id);
-    let data = {type:'movie', idPeli:ide, action:'add'}
-    try {
-      const response = await axios.post(`http://localhost:3002/usuarios/${user._id}/favoritos`, data);
-      console.log(response.data.data);
-      setUser(response.data.data);
-      showToast('success', 'Pelicula añadida a favoritos', '');
-    } catch (error) {
-      console.error('Error:', error);
+    if(user){
+      let data = {type:'movie', idPeli:ide, action:'add'}
+      try {
+        const response = await axios.post(`http://localhost:3002/usuarios/${user._id}/favoritos`, data);
+        console.log(response.data.data);
+        setUser(response.data.data);
+        showToast('success', 'Pelicula añadida a favoritos', '');
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }else{
+      Swal.fire({
+        icon: "error",
+        title: "Tienes que iniciar sesion para añadir peliculas a tus favoritos"
+      });
     }
   }
 

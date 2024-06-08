@@ -1,0 +1,98 @@
+.contenido-fav {
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 40px;
+    padding-left: 50px;
+    padding-right: 50px;
+    width: 100%;
+}
+.portada-fav{
+    width: 200px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: transform 0.2s, filter 0.2s;
+}
+
+.portada-fav:hover{
+    transform: scale(1.1);
+    filter:saturate(150%);
+
+}
+.simplebar-fav{
+    height: calc(100vh - 125px);
+    width: 100%;
+    position: relative;
+}
+@media (max-width: 2000px) {
+    .contenido-fav {
+        grid-template-columns: repeat(7, 1fr);
+        gap: 30px;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+@media (max-width: 1900px) {
+    .contenido-fav {
+        grid-template-columns: repeat(7, 1fr);
+        gap: 30px;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+@media (max-width: 1700px) {
+    .contenido-fav {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 30px;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+@media (max-width: 1450px) {
+    .contenido-fav {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 30px;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+
+/* Breakpoint para pantallas grandes (más de 1200px) */
+@media (max-width: 1200px) {
+    .contenido-fav {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+
+/* Breakpoint para pantallas medianas (más de 992px) */
+@media (max-width: 992px) {
+    .contenido-fav {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+
+/* Breakpoint para pantallas pequeñas (más de 768px) */
+@media (max-width: 768px) {
+    .contenido-fav {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+/* Breakpoint para pantallas extra pequeñas (menos de 576px) */
+@media (max-width: 576px) {
+    .contenido-fav {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}

@@ -24,7 +24,7 @@ const App = () => {
 
   // Función para verificar si el usuario está autenticado
   const isUserAuthenticated = () => {
-    console.log(user, token);
+    //console.log(user, token);
     if (user && token) {
       return true;
     }
