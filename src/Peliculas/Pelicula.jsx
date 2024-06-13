@@ -16,6 +16,7 @@ import {Sidebar} from 'primereact/sidebar';
 import { loginContext } from '../Login/loginContext';
 import { Toast } from 'primereact/toast';
 import Swal from 'sweetalert2';
+import { InputText } from "primereact/inputtext";
 import './peliculas.css';
 
 const Pelicula = () => {
@@ -318,9 +319,23 @@ const Pelicula = () => {
       <Scrolltop top={topScroll} funcion={goUp}/>
       <Sidebar className={'comentarios'} visible={visibleBottom} position="bottom" onHide={() => setVisibleBottom(false)}>
         <form className='form-comentario'>
-          <InputTextarea value={value} onChange={(e) => setValue(e.target.value)}  />
+          <InputText style={{ width: '95%' }} value={value} onChange={(e) => setValue(e.target.value)}  />
           <Button icon="pi pi-send" onClick={() => setVisibleBottom(true)} />
         </form>
+        <Divider type="dashed"/>
+        <div className='comentarios'>
+          <div  className='comentario' style={{display:'flex', flexDirection:'column', gap:'10px', marginTop:'10px'}}>
+            <div style={{display:'flex', gap:'10px'}}>
+              <span style={{fontWeight:'bold'}}>User</span>
+              <span>fecha</span>
+            </div>
+            <p style={{margin:'0px'}}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam molestias iure magnam officiis, enim, 
+              vel quam, impedit itaque quasi molestiae culpa dignissimos facere pariatur. Quas esse cum architecto non autem!
+            </p>
+          </div>
+          <Divider type="dashed"/>
+        </div>
       </Sidebar>
     </>
   )

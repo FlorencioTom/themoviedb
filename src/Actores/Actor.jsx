@@ -147,7 +147,7 @@ const Actor = () => {
     }
 
     const back = () => {
-        navigate('/peliculas');
+        navigate('/actores');
     }
 
     const showToast = (severity, summary, detail) => {
