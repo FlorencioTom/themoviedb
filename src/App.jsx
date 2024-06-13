@@ -18,6 +18,10 @@ import Actores from './Actores/Actores';
 
 import Favoritos from './Favoritos/Favoritos';
 
+import BuscarPelis from './Bucar/BuscarPelis';
+import BuscarSeries from './Bucar/BuscarSeries';
+import BuscarActores from './Bucar/BuscarActores';
+
 const App = () => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
@@ -51,13 +55,16 @@ const App = () => {
             <Route path='/peliculas' element={<Peliculas />} />
             <Route path='/peliculas/genero/:id' element={<GeneroPelis />} />
             <Route path='/peliculas/pelicula/:id' element={<Pelicula />} />
+            <Route path='/peliculas/buscar/:text' element={<BuscarPelis />} />
 
             <Route path='/series' element={<Series />} />
             <Route path='/series/genero/:id' element={<GeneroSeries />} />
             <Route path='/series/serie/:id' element={<Serie />} />
+            <Route path='/series/buscar/:text' element={<BuscarSeries />} />
 
             <Route path='/actores' element={<Actores />} />
             <Route path='/actor/:id' element={<Actor />} />
+            <Route path='/actores/buscar/:text' element={<BuscarActores />} />
 
             <Route path='/favoritos' element={<RenderFavoritosRoute />} /> {/* Llama al componente RenderFavoritosRoute */}
           </Routes>

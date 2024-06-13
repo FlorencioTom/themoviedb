@@ -73,7 +73,7 @@ const Actores = () => {
 
     return (
         <>
-            <Nav info={handleProfile} peli={true} filtroPelisTexto={filtroPelisTexto} estado={!loginVisible}/>
+            <Nav info={handleProfile} actor={true} filtroPelisTexto={filtroPelisTexto} estado={!loginVisible}/>
             <SimpleBar scrollableNodeProps={{ ref: scrollableNodeRef }} forceVisible="y" autoHide={false} className='simplebar-actores' style={{marginTop:'10px'}}>
                 <div class="fade-top"></div>
                 <div className='grid-filmografi' style={{paddingRight:'50px', paddingLeft:'50px'}}>

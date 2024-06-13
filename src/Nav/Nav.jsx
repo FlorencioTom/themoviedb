@@ -13,7 +13,8 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 
 import './Nav.css';
-const Nav = ({info, estado, peli, filtroPelisTexto, enFav}) => {
+const Nav = ({info, estado, peli, serie, actor, filtroPelisTexto, enFav}) => {
+  const tokenApi = import.meta.env.VITE_TOKEN_THEMOVIEDB_API;
   const [visible, setVisible] = useState(false);
   const [expand, setExpand] = useState(false);
   const filtroGP = useRef(null);
@@ -44,7 +45,7 @@ const Nav = ({info, estado, peli, filtroPelisTexto, enFav}) => {
     try {
       const response = await axios.post('http://localhost:3002/usuarios/logout',{
         headers: {
-          'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${tokenApi}`,
           'Content-Type': 'application/json',
         }       
       });
@@ -98,9 +99,18 @@ const Nav = ({info, estado, peli, filtroPelisTexto, enFav}) => {
     color: expand ? 'white' : '#1565c0'
     // Agrega otros estilos aquí si es necesario
   };
+  
+  const serachSerie = (texto) => {
+    console.log('serie:', texto); 
+  }
+
+  const serachActor = () => {
+    
+  }
 
   const filtro = (texto) => { 
-    filtroPelisTexto(texto);
+    //filtroPelisTexto(texto);
+
   }
 
   const goToFav = () => {
@@ -114,6 +124,20 @@ const Nav = ({info, estado, peli, filtroPelisTexto, enFav}) => {
     }
     //setVisible(false);
   }
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      if(peli){
+        navigate(`/peliculas/buscar/${e.target.value}`);
+      }
+      if(serie){
+        navigate(`/series/buscar/${e.target.value}`);
+      }
+      if(actor){
+        navigate(`/actores/buscar/${e.target.value}`);
+      }
+    }
+  };
 
   return (
     <>
@@ -155,7 +179,23 @@ const Nav = ({info, estado, peli, filtroPelisTexto, enFav}) => {
               <div style={{marginRight:'30px'}} className='filtro'>
                 <IconField iconPosition="left"> 
                   <InputIcon className="pi pi-search" onClick={() => setExpand(!expand)}> </InputIcon>
-                  <InputText className="filtroinput" onChange={(e) => filtro(e.target.value)} style={inputStyle} placeholder=""/>
+                  <InputText className="filtroinput" onKeyDown={(e) => handleKeyPress(e)} onChange={(e) => handleKeyPress(e.target.value)} style={inputStyle} placeholder=""/>
+                </IconField>
+              </div>
+            )}
+            {actor && ( 
+              <div style={{marginRight:'30px'}} className='filtro'>
+                <IconField iconPosition="left"> 
+                  <InputIcon className="pi pi-search" onClick={() => setExpand(!expand)}> </InputIcon>
+                  <InputText className="filtroinput" onKeyDown={(e) => handleKeyPress(e)} onChange={(e) => handleKeyPress(e.target.value)} style={inputStyle} placeholder=""/>
+                </IconField>
+              </div>
+            )}
+            {serie && ( 
+              <div style={{marginRight:'30px'}} className='filtro'>
+                <IconField iconPosition="left"> 
+                  <InputIcon className="pi pi-search" onClick={() => setExpand(!expand)}> </InputIcon>
+                  <InputText className="filtroinput" onKeyDown={handleKeyPress} onChange={(e) => filtro(e.target.value)} style={inputStyle} placeholder=""/>
                 </IconField>
               </div>
             )}
@@ -191,6 +231,12 @@ const Nav = ({info, estado, peli, filtroPelisTexto, enFav}) => {
           <FontAwesomeIcon icon={faBars} />
         </span>      
       </div>
+      <div className='header-mobile-items'>
+                <IconField iconPosition="left"> 
+                  <InputIcon className="pi pi-search" onClick={() => setExpand(!expand)}> </InputIcon>
+                  <InputText className="filtroinput" onKeyDown={(e) => handleKeyPress(e)} onChange={(e) => handleKeyPress(e.target.value)} style={inputStyle} placeholder=""/>
+                </IconField>
+              </div>
       <div className='header-mobile-items'>
         <Sidebar visible={visible} onHide={() => setVisible(false)}>
           <ul className='menu-sidebar'>

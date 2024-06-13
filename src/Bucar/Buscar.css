@@ -1,0 +1,27 @@
+.peliculas-de-buscar{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 40px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+/* Media query para tablets y dispositivos más pequeños */
+@media (max-width: 1024px) {
+    .peliculas-de-buscar {
+      grid-template-columns: repeat(5, 1fr); /* Reducir a 4 columnas en tablets */
+      gap: 20px; /* Reducir el espacio entre elementos */
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+  }
+  
+  /* Media query para dispositivos móviles */
+  @media (max-width: 768px) {
+    .peliculas-de-buscar {
+      grid-template-columns: repeat(4, 1fr); /* Cambiar a 2 columnas en dispositivos móviles */
+      gap: 10px; /* Reducir aún más el espacio entre elementos */
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }

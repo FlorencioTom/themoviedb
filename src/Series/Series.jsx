@@ -121,8 +121,8 @@ const Series = () => {
     }
 
     return (
-      <>
-      <Nav info={handleProfile} peli={true} filtroPelisTexto={filtroPelisTexto} estado={!loginVisible}/>
+      <> 
+      <Nav info={handleProfile} serie={true} filtroPelisTexto={filtroPelisTexto} estado={!loginVisible}/>
       <div className='container-generos'>
         <SimpleBar onScroll={() => handleScroll()} scrollableNodeProps={{ ref: scrollableNodeRef }} forceVisible="y" autoHide={false} className='simplebar-peliculas'>
         <div className='fade-top'></div>

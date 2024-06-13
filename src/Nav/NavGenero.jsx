@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faClapperboard, faBars,faMasksTheater, faArrowLeft, faHeart, faPowerOff, faPlus} from '@fortawesome/free-solid-svg-icons';
 import { Sidebar } from 'primereact/sidebar';
 import { Divider } from 'primereact/divider';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { loginContext } from '../Login/loginContext';
 import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
@@ -29,6 +29,7 @@ const NavGenero = ({info, estado, peli, filtroPelisTexto, id, generos}) => {
   const [peliculasRefDesk, setPeliculasRefDesk] = useState(false);
   const [generoPelis, setGeneroPelis] = useState(null);
   const [generoSeries, setGeneroSeries] = useState(null);
+  const navigate = useNavigate();
   const op = useRef(null);
 
   useEffect(() => {
@@ -170,6 +171,12 @@ const NavGenero = ({info, estado, peli, filtroPelisTexto, id, generos}) => {
       });
   }
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      navigate(`/peliculas/buscar/${e.target.value}`);
+    }
+  };
+
 
   return (
     <>
@@ -188,6 +195,12 @@ const NavGenero = ({info, estado, peli, filtroPelisTexto, id, generos}) => {
                     onMouseLeave={(e) => notHover(e.currentTarget)}>
                       <FontAwesomeIcon icon={faPlus} />
                 </li>
+                <div style={{marginRight:'30px'}} className='filtro'>
+                  <IconField iconPosition="left"> 
+                    <InputIcon className="pi pi-search" onClick={() => setExpand(!expand)}> </InputIcon>
+                    <InputText className="filtroinput" onKeyDown={(e) => handleKeyPress(e)} onChange={(e) => handleKeyPress(e.target.value)} style={inputStyle} placeholder=""/>
+                  </IconField>
+                </div>
             </ul>
             <div style={{display:'flex', alignItems:'center'}}>           
                 <ul className='menu-list dflc'> 
@@ -270,6 +283,7 @@ const NavGenero = ({info, estado, peli, filtroPelisTexto, id, generos}) => {
           <FontAwesomeIcon icon={faBars} />
         </span>      
       </div>
+      
       <div className='header-mobile-items'>
         <li className={`menu-list-item`} 
           onMouseEnter={(e) => hover(e.currentTarget)} 
