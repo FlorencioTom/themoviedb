@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useContext}  from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faClapperboard, faBars, faMasksTheater, faTv, faHeart, faPowerOff} from '@fortawesome/free-solid-svg-icons';
+import { faUser, faClapperboard, faBars, faMasksTheater, faTv, faHeart, faPowerOff, faHouse} from '@fortawesome/free-solid-svg-icons';
 import { Sidebar } from 'primereact/sidebar';
 import { Divider } from 'primereact/divider';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
@@ -145,6 +145,13 @@ const Nav = ({info, estado, peli, serie, actor, filtroPelisTexto, enFav}) => {
     <header className={`header-desktop ${location.pathname === '/'?'flotando':''}`} >
         <nav className='menu'>
             <ul className='menu-list'>
+              <NavLink to={'/'} className={({ isActive }) => isActive ? "activo" : ""}>
+                <li className={`menu-list-item`} 
+                  onMouseEnter={(e) => hover(e.currentTarget)} 
+                  onMouseLeave={(e) => notHover(e.currentTarget)}>
+                    Inicio
+                </li>
+              </NavLink>
               <NavLink to={'/peliculas'} className={({ isActive }) => isActive ? "activo" : ""}>
                 <li className={`menu-list-item`} 
                   onMouseEnter={(e) => hover(e.currentTarget)} 
@@ -240,6 +247,14 @@ const Nav = ({info, estado, peli, serie, actor, filtroPelisTexto, enFav}) => {
       <div className='header-mobile-items'>
         <Sidebar visible={visible} onHide={() => setVisible(false)}>
           <ul className='menu-sidebar'>
+            <li className='menu-sidebar-item'>
+              <NavLink to={`/`} className={({ isActive }) => isActive ? "activo-mobile" : "menu-sidebar-item-text"} >
+                <div style={{display:'flex', gap:'20px'}}>
+                  <FontAwesomeIcon icon={faHouse} />
+                  Inicio
+                </div>
+              </NavLink>
+            </li>
             <Divider type="dashed"/>
             <li className='menu-sidebar-item'>
               <NavLink to={`/peliculas`} className={({ isActive }) => isActive ? "activo-mobile" : "menu-sidebar-item-text"} >
