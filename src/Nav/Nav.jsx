@@ -41,11 +41,10 @@ const Nav = ({info, estado, peli, serie, actor, filtroPelisTexto, enFav}) => {
   }
 
   const logout = async() => {
-    console.log('sesion cerrada');
     try {
       const response = await axios.post('http://localhost:3002/usuarios/logout',{
         headers: {
-          'Authorization': `Bearer ${tokenApi}`,
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         }       
       });
@@ -54,6 +53,7 @@ const Nav = ({info, estado, peli, serie, actor, filtroPelisTexto, enFav}) => {
       setToken(null);
       console.log(response.data);
       showToast('info', 'Sesion cerrada', 'Cerraste la sesion');
+      //navigate('/');
     } catch (error) {
       console.error('Error en el logout:', error);
       showToast('error', 'Error de cerrar sesion', 'Ocurrió un error al Cerrar la sesion.');

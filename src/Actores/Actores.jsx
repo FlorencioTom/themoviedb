@@ -1,13 +1,18 @@
 import {useParams, NavLink, useNavigate} from 'react-router-dom';
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
+import {faArrowLeft, faX} from '@fortawesome/free-solid-svg-icons';
+import LoginCard from '../Login/LoginCard';
+import RegisterCard from '../Login/RegisterCard';
+import { loginContext } from '../Login/loginContext';
+import {animate, motion} from 'framer-motion';
 import SimpleBar from 'simplebar-react';
 import Scrolltop from '../Scrolltop/Scrolltop';
 import Tooltip from '@mui/material/Tooltip';
 import Zoom from '@mui/material/Zoom';
 import Nav from '../Nav/Nav';
 import axios from 'axios';
+import Buttonn from '@mui/material/Button';
 import {Paginator} from 'primereact/paginator';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import 'primereact/resources/primereact.min.css';
@@ -22,18 +27,27 @@ const Actores = () => {
     const [first, setFirst] = useState(0);
     const [rows, setRows] = useState(20);
     const [total, setTotal] = useState(null);
+    const [flip, setFlip] = useState(false);
+    const [animatee, setAnimate] = useState(false);
+    const containerLogin = useRef(null);
+    const {user, tokenjwt} = useContext(loginContext);
     const navigate = useNavigate();
 
     useEffect(() => {
         getActores();
     }, [pagina]);
 
+    const handleFlip = () => {
+        setAnimate(!animatee);
+        setFlip(!flip);
+      }
+
     const getActores = async() => {
         try {
             const response = await axios.get(`https://api.themoviedb.org/3/person/popular`, {
               headers: {
                 accept: 'application/json',
-                Authorization: `Bearer ${token}` // Reemplaza 'tu_token_de_autenticacion' con tu token real
+                Authorization: `Bearer ${token}` 
               },
               params: {
                 page: pagina
@@ -75,7 +89,7 @@ const Actores = () => {
         <>
             <Nav info={handleProfile} actor={true} filtroPelisTexto={filtroPelisTexto} estado={!loginVisible}/>
             <SimpleBar scrollableNodeProps={{ ref: scrollableNodeRef }} forceVisible="y" autoHide={false} className='simplebar-actores' style={{marginTop:'10px'}}>
-                <div class="fade-top"></div>
+                <div className="fade-top"></div>
                 <div className='grid-filmografi' style={{paddingRight:'50px', paddingLeft:'50px'}}>
                     {actores && actores.map((x, index) => {
                         return(
@@ -100,7 +114,41 @@ const Actores = () => {
                     onPageChange={goToPage}
                 />
             </SimpleBar>
+            {!user && (
+        <div ref={containerLogin} className={`container-login animate__animated animate__faster ${loginVisible ? 'animate__fadeIn' : 'invisible'}`}>
+          <div className='cerrar' onClick={() => setLoginVisible(!loginVisible)}>
+            <FontAwesomeIcon className='cerrar-icono' icon={faX} />
+          </div>
+          
+          <div className="flip-card">
+            <motion.div 
+              className='flip-card-inner'
+              initial={false}
+              animate={{rotateY: flip?180:360}}
+              transition={{duration:0.3, animationDirection:'normal'}}
+              onAnimationComplete={() => {setAnimate(false)}}>
+                <div className="flip-card-front">
+                  <LoginCard/>
+                  <div style={{width:'100%', display:'flex', justifyContent:'center', marginTop:'30px'}}>
+                    <Buttonn variant="contained" color="secondary" onClick={() => {handleFlip()}}>¿Aun no tienes cuenta?</Buttonn>
+                  </div>
+                  {user && (
+                    <div className='user-info'>
+                      <p>Bienvenido, {user.user}</p>
+                    </div>
+                  )}
+                </div>
 
+                <div className="flip-card-back">
+                  <RegisterCard/> 
+                  <div style={{width:'100%', display:'flex', justifyContent:'center', marginTop:'30px'}}>
+                    <Buttonn variant="contained" color="secondary" onClick={() => {handleFlip()}}>Volver al Login</Buttonn>
+                  </div> 
+                </div>
+            </motion.div>
+          </div>
+        </div>
+      )}
         </>
     )
 }
