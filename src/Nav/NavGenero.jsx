@@ -294,13 +294,24 @@ const NavGenero = ({info, estado, peli, filtroPelisTexto, id, generos}) => {
       <div className='header-mobile-items'>
         <Sidebar visible={visible} onHide={() => setVisible(false)}>
           <ul className='menu-sidebar'>
-          <NavLink to={'/peliculas'}>
-                    <li className={`menu-sidebar-item`} 
-                        onMouseEnter={(e) => hover(e.currentTarget)} 
-                        onMouseLeave={(e) => notHover(e.currentTarget)}>
-                        <FontAwesomeIcon icon={faArrowLeft} />
-                    </li>
-                </NavLink>
+          {generos == 'series' && (
+            <NavLink to={'/series'}>
+              <li className={`menu-sidebar-item`} 
+                  onMouseEnter={(e) => hover(e.currentTarget)} 
+                  onMouseLeave={(e) => notHover(e.currentTarget)}>
+                  <FontAwesomeIcon icon={faArrowLeft} />
+              </li>
+            </NavLink>
+          )}
+          {generos == 'pelis' && (
+            <NavLink to={'/peliculas'}>
+              <li className={`menu-sidebar-item`} 
+                  onMouseEnter={(e) => hover(e.currentTarget)} 
+                  onMouseLeave={(e) => notHover(e.currentTarget)}>
+                  <FontAwesomeIcon icon={faArrowLeft} />
+              </li>
+            </NavLink>
+          )}
           <Divider type="dashed"/>
           {(generoPelis && generos=='pelis') && generoPelis.map((genero, index) => {
                         if(genero.id != id){

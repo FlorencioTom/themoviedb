@@ -23,10 +23,12 @@ const Nav = ({info, estado, peli, serie, actor, filtroPelisTexto, enFav}) => {
   const location = useLocation();
   const toastTopCenter = useRef(null);
   const navigate = useNavigate();
+  const [isHome , setIsHome] = useState(false);
 
   useEffect(() => {
     if(location.pathname === '/'){
       console.log('estoy en la raiz');
+      setIsHome(true);
     } 
   },[user, token]);
 
@@ -238,12 +240,14 @@ const Nav = ({info, estado, peli, serie, actor, filtroPelisTexto, enFav}) => {
           <FontAwesomeIcon icon={faBars} />
         </span>      
       </div>
+      {!isHome && (
       <div className='header-mobile-items'>
-                <IconField iconPosition="left"> 
-                  <InputIcon className="pi pi-search" onClick={() => setExpand(!expand)}> </InputIcon>
-                  <InputText className="filtroinput" onKeyDown={(e) => handleKeyPress(e)} onChange={(e) => handleKeyPress(e.target.value)} style={inputStyle} placeholder=""/>
-                </IconField>
-              </div>
+        <IconField iconPosition="left"> 
+          <InputIcon className="pi pi-search" onClick={() => setExpand(!expand)}> </InputIcon>
+          <InputText className="filtroinput" onKeyDown={(e) => handleKeyPress(e)} onChange={(e) => handleKeyPress(e.target.value)} style={inputStyle} placeholder=""/>
+        </IconField>
+      </div>
+      )}
       <div className='header-mobile-items'>
         <Sidebar visible={visible} onHide={() => setVisible(false)}>
           <ul className='menu-sidebar'>
