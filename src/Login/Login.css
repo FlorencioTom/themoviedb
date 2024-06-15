@@ -52,7 +52,7 @@ html{
 
 .container-login{
     position: absolute; /* Establece el posicionamiento absoluto */
-    top: 40%; /* Ubica el borde superior del div en el 50% del contenedor */
+    top: 50%; /* Ubica el borde superior del div en el 50% del contenedor */
     left: 50%; /* Ubica el borde izquierdo del div en el 50% del contenedor */
     transform: translate(-50%, -50%); /* Mueve el div hacia el centro del contenedor */
     color: #fff; /* Color del texto */
